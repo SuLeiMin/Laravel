@@ -13,10 +13,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(["middleware" => ["lang"]], function(){
+    Route::get('/', function () {
+        return view('welcome');
+    });
+    
+    Auth::routes();
+    
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    Route::get("change-lang/{lang}", function($lang){
+        session()->put("lang", $lang);
+        return redirect()->back();
+    })->name("change-lang");
 });
 
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

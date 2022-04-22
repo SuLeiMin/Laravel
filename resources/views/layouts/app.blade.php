@@ -38,6 +38,13 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
+                        <strong>{{session()->get("lang")}}</strong>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('change-lang', 'en') }}">English</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('change-lang', 'jp') }}">Japanese</a>
+                        </li>
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
