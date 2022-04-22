@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\CustomLoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,8 @@ Route::group(["middleware" => ["lang"]], function(){
     });
     
     Auth::routes();
+
+    Route::post('custom-login', [CustomLoginController::class,'login'])->name('custom-login');
     
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -27,5 +30,7 @@ Route::group(["middleware" => ["lang"]], function(){
         return redirect()->back();
     })->name("change-lang");
 });
+
+
 
 
