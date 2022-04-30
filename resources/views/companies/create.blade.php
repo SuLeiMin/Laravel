@@ -315,11 +315,11 @@
             return false;
         }
         alert("保存されました");
-        location.href = "./keiyakuichiran";
+        location.href = "./index";
         });
         // キャンセル
         $("#cancel_btn").on("click", function () {
-        location.href = "./keiyakuichiran";
+        location.href = "./index";
         });
         // 担当者追加
         $("#add_tantousya_btn").on("click", function () {

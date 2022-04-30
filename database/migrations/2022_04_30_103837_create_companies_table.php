@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateKeiyakukigyouTable extends Migration
+class CreateCompaniesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateKeiyakukigyouTable extends Migration
      */
     public function up()
     {
-        Schema::create('keiyakukigyou', function (Blueprint $table) {
+        Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('postnumber');
@@ -34,6 +34,6 @@ class CreateKeiyakukigyouTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('keiyakukigyou');
+        Schema::dropIfExists('companies');
     }
 }

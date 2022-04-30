@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\KeiyakuController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\EmployeeController;
 use App\Models\Keiyakukigyou;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Input;
 
@@ -19,31 +21,13 @@ use Illuminate\Support\Facades\Input;
 |
 */
 
+Auth::routes(["register" => false]);
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('products', ProductController::class);
-
-Route::get('keiyakuichiran',[KeiyakuController::class, 'index']);
-
-Route::get('/example',[ExampleController::class, 'index']);
-
-Route::get('/executecsv', function () {
-    return view('executecsv');
-});
-
-Route::get('delete/{id}','StudDeleteController@destroy');
-
-Route::get('/keiyakuichiran',[KeiyakuController::class, 'index']);
-
-Route::get('/keiyakutoroku',[EmployeeController::class, 'index']);
-
-//Route::get('/keiyakuichiran',[EmployeeController::class, 'index']);
-
-Route::get('/keiyakutoroku/{keiyaku}/can-delete',[KeiyakuController::class, 'canDelete'])->name("company.can-delete");
-Route::post('/keiyakutoroku/{keiyaku}/delete',[KeiyakuController::class, 'destroy'])->name("company.destroy");
-
-Route::get("/test", function(){
-    return view("test");
+Route::middleware("auth")->group(function(){
+    Route::resource("companies", CompanyController::class);
+    ROute::get("companies/{company}/can-delete", [CompanyController::class, "canDelete"])->name("companies.can-delete");
 });

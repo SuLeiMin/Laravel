@@ -145,12 +145,12 @@
 			let selno;
 			// 登録
 			$("#entry_btn").on("click", function () {
-			location.href = "./keiyakutoroku";
+			location.href = "./create";
 			});
 			// 編集
 			$("#edit_btn").on("click", function () {
 			if ((selno = chk_selno())) {
-				location.href = "./keiyakutoroku?selno=" + selno;
+				location.href = "./create?selno=" + selno;
 			}
 			});
 			// 削除処理
@@ -160,13 +160,13 @@
 				// キャンセル
 				return false;
 				} else {
-				let url = "{{route("company.can-delete", "||")}}";
+				let url = "{{route("companies.can-delete", "||")}}";
 				url = url.replace("||", chk_selno());
 				$.ajax({
 					url,
 					success: function(res){
 					if(res){
-						let url = "{{route("company.destroy", "||")}}";
+						let url = "{{route("companies.destroy", "||")}}";
 						url = url.replace("||", chk_selno());
 						$.ajax({
 						url,
