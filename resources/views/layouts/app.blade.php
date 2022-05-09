@@ -31,7 +31,7 @@
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
-              >Hogehogeさん</a
+              >hogehoge</a
             >
             <div class="dropdown-menu" aria-labelledby="dropdown01">
               <a class="dropdown-item" href="pwreset.html">パスワード変更</a>
@@ -72,7 +72,7 @@
       </script>
 
       <!-- Custom js -->
-      <script type="text/javascript" src="{{("js/common.js")}}"></script>
+      <script type="text/javascript" src="{{asset("js/common.js")}}"></script>
       @stack("js")
     </body>
   </html>  

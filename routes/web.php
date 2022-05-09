@@ -1,14 +1,8 @@
 <?php
 
-use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\ExampleController;
-use App\Http\Controllers\KeiyakuController;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\EmployeeController;
-use App\Models\Keiyakukigyou;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Input;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +22,6 @@ Route::get('/', function () {
 });
 
 Route::middleware("auth")->group(function(){
-    Route::resource("companies", CompanyController::class);
-    ROute::get("companies/{company}/can-delete", [CompanyController::class, "canDelete"])->name("companies.can-delete");
+    Route::resource("employes", EmployeeController::class);
+    ROute::get("employes/{company}/can-delete", [EmployeeController::class, "canDelete"])->name("employes.can-delete");
 });

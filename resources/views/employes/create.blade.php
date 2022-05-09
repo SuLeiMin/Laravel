@@ -2,13 +2,14 @@
 
 @section('content')
 <div class="container">
-<form class="text-left">
+<form class="text-left" id="form" action="{{route("employes.store")}}" method="POST">
+  @csrf
   <input type="hidden" name="company_id" id="company_id" value="999999" />
   <div class="form-signin">
     <div class="form-group row">
       <div class="col-sm-4 offset-sm-2">
         <button
-          type="button"
+          type="submit"
           id="save_btn"
           class="btn btn-lg btn-primary btn-block"
         >
@@ -31,18 +32,19 @@
       <p>企業ID</p>
     </div>
     <div class="col-sm-6 form-text-offset">
-      <p>999999</p>
+      <p>-</p>
     </div>
+    {{-- {{dd($errors)}} --}}
   </div>
   <div class="form-group row">
-    <label for="company_name" class="col-sm-3 col-form-label form-label"
+    <label for="name" class="col-sm-3 col-form-label form-label"
       ><span class="required">※</span>企業名</label
     >
     <div class="col-sm-6">
       <input
         type="text"
-        name="company_name"
-        id="company_name"
+        name="name"
+        id="name"
         class="form-control"
         title="企業名"
         placeholder=""
@@ -51,14 +53,15 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="company_name" class="col-sm-3 col-form-label form-label"
+    <label for="zip_code" class="col-sm-3 col-form-label form-label"
       ><span class="required">※</span>郵便番号</label
     >
     <div class="col-sm-6">
       <div class="input-group form-number">
         <input
           type="text"
-          name="zipcode"
+          name="zip_code"
+          id="zip_code"
           class="form-control"
           title="郵便番号"
           placeholder="000-0000"
@@ -121,14 +124,14 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="tel" class="col-sm-3 col-form-label form-label"
+    <label for="telephone" class="col-sm-3 col-form-label form-label"
       ><span class="required">※</span>TEL</label
     >
     <div class="col-sm-6">
       <input
         type="text"
-        name="tel"
-        id="tel"
+        name="telephone"
+        id="telephone"
         class="form-control form-number"
         title="TEL"
         placeholder="00-0000-0000"
@@ -137,14 +140,14 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="department1" class="col-sm-3 col-form-label form-label"
+    <label for="dept1" class="col-sm-3 col-form-label form-label"
       ><span class="required">※</span>部署1</label
     >
     <div class="col-sm-6">
       <input
         type="text"
-        name="department1"
-        id="department1"
+        name="dept1"
+        id="dept1"
         class="form-control"
         title="部署1"
         placeholder=""
@@ -168,19 +171,22 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="tantousya_id" class="col-sm-3 col-form-label form-label"
+    <label for="in_charge_id" class="col-sm-3 col-form-label form-label"
       ><span class="required">※</span>担当者氏名</label
     >
     <div class="col-sm-3">
       <select
-        name="tantousya_id"
-        id="tantousya_id"
+        name="in_charge_id"
+        id="in_charge_id"
         class="form-control"
         title="担当者氏名"
       >
         <option value="">担当者氏名</option>
         <option value="9999">9999　富永　暁子</option>
       </select>
+      @error('in_charge_id')
+          <div class="text-danger"><small>{{$message}}</small></div>
+      @enderror
     </div>
     <div class="col-sm-3">
       <button
@@ -200,13 +206,13 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="kessai" class="col-sm-3 col-form-label form-label"
+    <label for="payment_method" class="col-sm-3 col-form-label form-label"
       >決済方法</label
     >
     <div class="col-sm-3">
       <select
-        name="kessai"
-        id="kessai"
+        name="payment_method"
+        id="payment_method"
         class="form-control"
         title="決済方法"
       >
@@ -215,50 +221,59 @@
         <option value="2">請求書発行</option>
         <option value="3">口座引き落とし</option>
       </select>
+      @error('payment_method')
+          <div class="text-danger"><small>{{$message}}</small></div>
+      @enderror
     </div>
   </div>
   <div class="form-group row">
-    <label for="shimebi" class="col-sm-3 col-form-label form-label"
+    <label for="deadline1" class="col-sm-3 col-form-label form-label"
       ><span class="required">※</span>請求締日</label
     >
     <div class="col-sm-3">
       <select
-        name="shimebi"
-        id="shimebi"
+        name="deadline1"
+        id="deadline1"
         class="form-control"
         title="請求締日"
       >
         <option value="">請求締日</option>
         <option value="1">末日</option>
       </select>
+      @error('deadline1')
+          <div class="text-danger"><small>{{$message}}</small></div>
+      @enderror
     </div>
   </div>
   <div class="form-group row">
-    <label for="shiharaibi" class="col-sm-3 col-form-label form-label"
+    <label for="deadline2" class="col-sm-3 col-form-label form-label"
       ><span class="required">※</span>支払期日</label
     >
     <div class="col-sm-3">
       <select
-        name="shiharaibi"
-        id="shiharaibi"
+        name="deadline2"
+        id="deadline2"
         class="form-control"
         title="支払期日"
       >
         <option value="">支払期日</option>
         <option value="1">末日</option>
       </select>
+      @error('deadline1')
+          <div class="text-danger"><small>{{$message}}</small></div>
+      @enderror
     </div>
   </div>
   <div class="form-group row">
     <label
-      for="seikyuuysyo_bikou"
+      for="remark"
       class="col-sm-3 col-form-label form-label"
       >請求書備考</label
     >
     <div class="col-sm-8">
       <textarea
-        name="seikyuuysyo_bikou"
-        id="seikyuuysyo_bikou"
+        name="remark"
+        id="remark"
         class="form-control"
         cols="50"
         rows="2"
@@ -288,7 +303,7 @@
       <label>
         <input
           type="checkbox"
-          name="email_send"
+          name="noti"
           id="email_send"
           class=""
           value="1"
@@ -304,18 +319,9 @@
     $(function () {
         // 保存
         $("#save_btn").on("click", function () {
-        if ($("#email_send:checked").val()) {
-            if (!confirm("登録内容をメール通知しますか？")) {
-            // キャンセル
-            return false;
-            }
-        }
-        if (!confirm("登録内容を保存しますか？")) {
-            // キャンセル
-            return false;
-        }
-        alert("保存されました");
-        location.href = "./index";
+          if(confirm("Are you sure to save?")){
+            $("#form").submit();
+          }
         });
         // キャンセル
         $("#cancel_btn").on("click", function () {
@@ -329,6 +335,14 @@
         $("#edit_tantousya_btn").on("click", function () {
         location.href = "./tantousya.html";
         });
+
+        $("#email_send").on("change", function(){
+          if($(this).is(":checked")){
+            if(!confirm("Are you sure to send noti?")){
+              $(this).prop("checked", false);
+            }
+          }
+        })
     });
     </script>
 @endpush

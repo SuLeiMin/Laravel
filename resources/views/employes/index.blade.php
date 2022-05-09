@@ -51,13 +51,13 @@
 
 		<div class="form-group">
 		  <span>契約企業：</span>
-		  <button type="button" class="btn btn-primary" id="entry_btn">
+		  <a href="{{route("employes.create")}}" class="btn btn-primary" id="entry_btn">
 			登録
-		  </button>
-		  <button type="button" class="btn btn-primary" id="edit_btn">
+		  </a>
+		  <button type="button" disabled class="btn btn-primary" id="edit_btn">
 			編集
 		  </button>
-		  <button type="button" class="btn btn-primary" id="delete_btn">
+		  <button type="button" disabled class="btn btn-primary" id="delete_btn">
 			削除
 		  </button>
 		</div>
@@ -116,7 +116,7 @@
 					</td>
 					<td><a href="company.html">{{$item->id}}</a></td>
 					<td>{{$item->name}}</td>
-					<td>{{$item->postnumber}}</td>
+					<td>{{$item->zip_code}}</td>
 					<td>{{$item->address1}}</td>
 					<td>{{$item->address2}}</td>
 					<td>{{$item->telephone}}</td>
@@ -145,12 +145,14 @@
 			let selno;
 			// 登録
 			$("#entry_btn").on("click", function () {
-			location.href = "./create";
+			location.href = "{{route("employes.create")}}";
 			});
 			// 編集
 			$("#edit_btn").on("click", function () {
 			if ((selno = chk_selno())) {
-				location.href = "./create?selno=" + selno;
+				let url = "{{route("employes.edit", "||")}}";
+				url = url.replace("||", chk_selno());
+				location.href = url;
 			}
 			});
 			// 削除処理
@@ -160,13 +162,13 @@
 				// キャンセル
 				return false;
 				} else {
-				let url = "{{route("companies.can-delete", "||")}}";
+				let url = "{{route("employes.can-delete", "||")}}";
 				url = url.replace("||", chk_selno());
 				$.ajax({
 					url,
 					success: function(res){
 					if(res){
-						let url = "{{route("companies.destroy", "||")}}";
+						let url = "{{route("employes.destroy", "||")}}";
 						url = url.replace("||", chk_selno());
 						$.ajax({
 						url,
@@ -202,6 +204,10 @@
 			}
 			return selno;
 		}
+		$(".sel_item").on("change", function(){
+			$("#edit_btn").attr("disabled", false);
+			$("#delete_btn").attr("disabled", false);
+		})
 		</script>
 	@endpush
 @endsection
