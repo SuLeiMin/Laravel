@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\EmployeesExport;
 use App\Models\Employee;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Mail\NewEmployeeCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EmployeeController extends Controller
 {
@@ -25,7 +27,7 @@ class EmployeeController extends Controller
             }
         })->paginate();
     
-        return view('employes.index', compact('items'));
+        return view('employees.index', compact('items'));
     }
 
     /**
@@ -35,7 +37,8 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return view("employes.create");
+        return view("employees.create");
+        
     }
 
     /**
@@ -52,7 +55,7 @@ class EmployeeController extends Controller
             Mail::to(env("MAIL_ADMIN_EMAIL"))->send(new NewEmployeeCreated($employee));
         }
 
-        return redirect()->route("employes.index");
+        return redirect()->route("employees.index");
     }
 
     /**
@@ -63,7 +66,7 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        //
+        return view("employees.create");
     }
 
     /**
@@ -99,11 +102,12 @@ class EmployeeController extends Controller
     {
         $employee->delete();
 
-        return redirect()->route("employes.index");
+        return redirect()->route("employees.index");
     }
 
     public function canDelete(Employee $employee){
         return true;
         return $employee->employees()->count() ? true : false;
     }
+        
 }

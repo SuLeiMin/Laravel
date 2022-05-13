@@ -51,7 +51,7 @@
 
 		<div class="form-group">
 		  <span>契約企業：</span>
-		  <a href="{{route("employes.create")}}" class="btn btn-primary" id="entry_btn">
+		  <a href="{{route("employees.create")}}" class="btn btn-primary" id="entry_btn">
 			登録
 		  </a>
 		  <button type="button" disabled class="btn btn-primary" id="edit_btn">
@@ -62,7 +62,8 @@
 		  </button>
 		</div>
 		<div class="form-group text-right">
-		  <button type="button" class="btn btn-outline-primary">
+		 
+			<a href="download" class="btn btn-outline-primary"> 
 			<svg
 			  xmlns="http://www.w3.org/2000/svg"
 			  width="16"
@@ -79,7 +80,7 @@
 			  ></path>
 			</svg>
 			データ出力
-		  </button>
+		</a>
 		</div>
 
 		<div class="table-responsive">
@@ -145,12 +146,12 @@
 			let selno;
 			// 登録
 			$("#entry_btn").on("click", function () {
-			location.href = "{{route("employes.create")}}";
+			location.href = "{{route("employees.create")}}";
 			});
 			// 編集
 			$("#edit_btn").on("click", function () {
 			if ((selno = chk_selno())) {
-				let url = "{{route("employes.edit", "||")}}";
+				let url = "{{route("employees.edit", "||")}}";
 				url = url.replace("||", chk_selno());
 				location.href = url;
 			}
@@ -162,21 +163,23 @@
 				// キャンセル
 				return false;
 				} else {
-				let url = "{{route("employes.can-delete", "||")}}";
+				let url = "{{route("employees.can-delete", "||")}}";
 				url = url.replace("||", chk_selno());
 				$.ajax({
 					url,
 					success: function(res){
 					if(res){
-						let url = "{{route("employes.destroy", "||")}}";
+						let url = "{{route("employees.destroy", "||")}}";
 						url = url.replace("||", chk_selno());
 						$.ajax({
 						url,
 						data: {
-							"_token": "{{csrf_token()}}"
+							"_token": "{{csrf_token()}}",
+							"_method": "DELETE"
+							//ajax and laravel 
 						},
 						method: "POST",
-						success: function(){
+						success: function(res){
 							alert(selno + "が削除されました");
 							location.reload();
 						}

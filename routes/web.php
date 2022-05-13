@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DownloadsController;
+use App\Models\Employee;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +25,15 @@ Route::get('/', function () {
 });
 
 Route::middleware("auth")->group(function(){
-    Route::resource("employes", EmployeeController::class);
-    ROute::get("employes/{company}/can-delete", [EmployeeController::class, "canDelete"])->name("employes.can-delete");
+    
+    //Route::get("employees/export", [EmployeeController::class, "export"])->name("employees.export");
+    Route::resource("employees", EmployeeController::class);
+    Route::get("employees/{company}/can-delete", [EmployeeController::class, "canDelete"])->name("employees.can-delete");
+    
 });
+
+//Route::get('download', [DownloadsController::class, "download"]);
+//Route::get('download',[DownloadsController::class,'getIndex']);
+
+Route::get('download',[DownloadsController::class,'exportCSV']);
+

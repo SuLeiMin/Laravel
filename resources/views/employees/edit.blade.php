@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-<form class="text-left" id="form" action="{{route("employes.store")}}" method="POST">
+<form class="text-left" id="form" action="{{route("employees.store")}}" method="POST">
   @csrf
   <input type="hidden" name="company_id" id="company_id" value="999999" />
   <div class="form-signin">
@@ -32,7 +32,7 @@
       <p>企業ID</p>
     </div>
     <div class="col-sm-6 form-text-offset">
-      <p>-</p>
+      <p></p>
     </div>
     {{-- {{dd($errors)}} --}}
   </div>
@@ -45,6 +45,7 @@
         type="text"
         name="name"
         id="name"
+        value=""
         class="form-control"
         title="企業名"
         placeholder=""
@@ -61,6 +62,7 @@
         <input
           type="text"
           name="zip_code"
+          value=""
           id="zip_code"
           class="form-control"
           title="郵便番号"
@@ -101,6 +103,7 @@
         type="text"
         name="address1"
         id="address1"
+        value=""
         class="form-control"
         title="住所1"
         placeholder=""
@@ -117,6 +120,7 @@
         type="text"
         name="address2"
         id="address2"
+        value=""
         class="form-control"
         title="住所2"
         placeholder=""
@@ -132,6 +136,7 @@
         type="text"
         name="telephone"
         id="telephone"
+        value=""
         class="form-control form-number"
         title="TEL"
         placeholder="00-0000-0000"
@@ -148,6 +153,7 @@
         type="text"
         name="dept1"
         id="dept1"
+        value=""
         class="form-control"
         title="部署1"
         placeholder=""
@@ -164,6 +170,7 @@
         type="text"
         name="department2"
         id="department2"
+        value=""
         class="form-control"
         title="部署2"
         placeholder=""
@@ -314,36 +321,5 @@
   </div>
 </form>
 </div>
-@push("js")
-    <script>
-    $(function () {
-        // 保存
-        $("#save_btn").on("click", function () {
-          if(confirm("Are you sure to save?")){
-            $("#form").submit();
-          }
-        });
-        // キャンセル
-        $("#cancel_btn").on("click", function () {
-        location.href = "./index";
-        });
-        // 担当者追加
-        $("#add_tantousya_btn").on("click", function () {
-        location.href = "./tantousya.html";
-        });
-        // 担当者修正
-        $("#edit_tantousya_btn").on("click", function () {
-        location.href = "./tantousya.html";
-        });
 
-        $("#email_send").on("change", function(){
-          if($(this).is(":checked")){
-            if(!confirm("Are you sure to send noti?")){
-              $(this).prop("checked", false);
-            }
-          }
-        })
-    });
-    </script>
-@endpush
 @endsection
