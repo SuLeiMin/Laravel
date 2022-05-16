@@ -109,5 +109,36 @@ class EmployeeController extends Controller
         return true;
         return $employee->employees()->count() ? true : false;
     }
+
+    public function exportCSV()
+  {
+      return response()->streamDownload(function () {
+      $users = Employee::all()->toArray();
+      $head = [
+            'id',
+            'name',
+            'zipcode',
+            'add1',
+            'add2',
+            'telephone',
+            'dept1',
+            'dept2',
+            '-',
+            'payment-method',
+            '-',
+            '-',
+            'remark',
+            '-',
+      ];
+        $handle = fopen('php://output', 'w');
+        mb_convert_variables('SJIS', 'UTF-8', $head);
+        fputcsv($handle, $head);
+        foreach ($users as $row) {
+            mb_convert_variables('SJIS', 'UTF-8', $row);
+            fputcsv($handle, $row);
+        }
+        fclose($handle);
+    }, 'sample.csv');
+  }
         
 }

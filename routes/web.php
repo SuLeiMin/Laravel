@@ -26,6 +26,7 @@ Route::get('/', function () {
 
 Route::middleware("auth")->group(function(){
     
+    Route::get('download',[EmployeeController::class,'exportCSV']);
     //Route::get("employees/export", [EmployeeController::class, "export"])->name("employees.export");
     Route::resource("employees", EmployeeController::class);
     Route::get("employees/{company}/can-delete", [EmployeeController::class, "canDelete"])->name("employees.can-delete");
@@ -34,6 +35,5 @@ Route::middleware("auth")->group(function(){
 
 //Route::get('download', [DownloadsController::class, "download"]);
 //Route::get('download',[DownloadsController::class,'getIndex']);
-
-Route::get('download',[DownloadsController::class,'exportCSV']);
+//Route::get('download',[DownloadsController::class,'exportCSV']);
 

@@ -17,7 +17,7 @@ class DownloadsController extends Controller
       return view('employees.download', compact('users'));
   }
 
-  public function exportCSV()
+  /*public function exportCSV()
   {
       return response()->streamDownload(function () {
       $users = Employee::all()->toArray();
@@ -46,5 +46,5 @@ class DownloadsController extends Controller
         }
         fclose($handle);
     }, 'sample.csv');
-  }
+  }*/
 }
