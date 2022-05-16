@@ -2,40 +2,33 @@
 
 @section('content')
 <div class="container">
-<form class="text-left" id="form" action="{{route("employees.store")}}" method="POST">
+<form class="text-left" id="form" action="{{ route('employees.update',$employee->id) }}" method="POST">
   @csrf
-  <input type="hidden" name="company_id" id="company_id" value="999999" />
+  @method('PUT')
   <div class="form-signin">
     <div class="form-group row">
       <div class="col-sm-4 offset-sm-2">
         <button
           type="submit"
           id="save_btn"
-          class="btn btn-lg btn-primary btn-block"
-        >
+          class="btn btn-lg btn-primary btn-block">
           保存
         </button>
       </div>
       <div class="col-sm-4">
-        <button
-          type="button"
-          id="cancel_btn"
-          class="btn btn-lg btn-secondary btn-block"
-        >
-          キャンセル
-        </button>
+          <a class="btn btn-lg btn-primary btn-block" href="{{ route('employees.index') }}" id="cancel_btn"> キャンセル</a>
       </div>
     </div>
   </div>
   <div class="form-group row">
     <div class="col-sm-3 form-label">
-      <p>企業ID</p>
+        <p>企業ID</p>
     </div>
     <div class="col-sm-6 form-text-offset">
-      <p></p>
+      {{ $employee->id }}
     </div>
-    {{-- {{dd($errors)}} --}}
   </div>
+</div>
   <div class="form-group row">
     <label for="name" class="col-sm-3 col-form-label form-label"
       ><span class="required">※</span>企業名</label
@@ -45,7 +38,7 @@
         type="text"
         name="name"
         id="name"
-        value=""
+        value="{{ $employee->name }}"
         class="form-control"
         title="企業名"
         placeholder=""
@@ -62,7 +55,7 @@
         <input
           type="text"
           name="zip_code"
-          value=""
+          value="{{ $employee->zip_code }}"
           id="zip_code"
           class="form-control"
           title="郵便番号"
@@ -103,7 +96,7 @@
         type="text"
         name="address1"
         id="address1"
-        value=""
+        value="{{ $employee->address1 }}"
         class="form-control"
         title="住所1"
         placeholder=""
@@ -120,7 +113,7 @@
         type="text"
         name="address2"
         id="address2"
-        value=""
+        value="{{ $employee->address2 }}"
         class="form-control"
         title="住所2"
         placeholder=""
@@ -136,7 +129,7 @@
         type="text"
         name="telephone"
         id="telephone"
-        value=""
+        value="{{ $employee->telephone }}"
         class="form-control form-number"
         title="TEL"
         placeholder="00-0000-0000"
@@ -153,7 +146,7 @@
         type="text"
         name="dept1"
         id="dept1"
-        value=""
+        value="{{ $employee->dept1 }}"
         class="form-control"
         title="部署1"
         placeholder=""
@@ -168,9 +161,9 @@
     <div class="col-sm-6">
       <input
         type="text"
-        name="department2"
-        id="department2"
-        value=""
+        name="dept2"
+        id="dept2"
+        value="{{ $employee->dept2 }}"
         class="form-control"
         title="部署2"
         placeholder=""
@@ -213,9 +206,7 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="payment_method" class="col-sm-3 col-form-label form-label"
-      >決済方法</label
-    >
+    <label for="payment_method" class="col-sm-3 col-form-label form-label">決済方法</label>
     <div class="col-sm-3">
       <select
         name="payment_method"
@@ -266,7 +257,7 @@
         <option value="">支払期日</option>
         <option value="1">末日</option>
       </select>
-      @error('deadline1')
+      @error('deadline2')
           <div class="text-danger"><small>{{$message}}</small></div>
       @enderror
     </div>
@@ -281,6 +272,7 @@
       <textarea
         name="remark"
         id="remark"
+        value="{{ $employee->remark }}"
         class="form-control"
         cols="50"
         rows="2"

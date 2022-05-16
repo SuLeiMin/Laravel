@@ -13,7 +13,7 @@ class UpdateEmployeeRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,19 @@ class UpdateEmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "name" => ["required"],
+            "zip_code" => ["required"],
+            "address1" => ["required"],
+            "address2" => ["nullable"],
+            "telephone" => ["required"],
+            "dept1" => ["required"],
+            "dept2" => ["nullable"],
+            "in_charge_id" => ["required"],
+            "payment_method" => ["required"],
+            "deadline1" => ["required"],
+            "deadline2" => ["required"],
+            "remark" => ["nullable"],
+            "noti" => ["nullable"],
         ];
     }
 }

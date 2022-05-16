@@ -34,7 +34,6 @@
     <div class="col-sm-6 form-text-offset">
       <p>-</p>
     </div>
-    {{-- {{dd($errors)}} --}}
   </div>
   <div class="form-group row">
     <label for="name" class="col-sm-3 col-form-label form-label"
@@ -50,6 +49,9 @@
         placeholder=""
         required
       />
+      @error('name')
+        <div class="text-danger"><small>{{$message}}</small></div>
+      @enderror
     </div>
   </div>
   <div class="form-group row">
@@ -74,6 +76,7 @@
             type="button"
             class="btn btn-outline-secondary form-control"
             style="color: #0d6efd"
+            id="search_btn"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -106,6 +109,9 @@
         placeholder=""
         required
       />
+      @error('address1')
+      <div class="text-danger"><small>{{$message}}</small></div>
+      @enderror
     </div>
   </div>
   <div class="form-group row">
@@ -137,6 +143,9 @@
         placeholder="00-0000-0000"
         required
       />
+      @error('telephone')
+      <div class="text-danger"><small>{{$message}}</small></div>
+      @enderror
     </div>
   </div>
   <div class="form-group row">
@@ -153,6 +162,9 @@
         placeholder=""
         required
       />
+      @error('dept1')
+      <div class="text-danger"><small>{{$message}}</small></div>
+      @enderror
     </div>
   </div>
   <div class="form-group row">
@@ -259,7 +271,7 @@
         <option value="">支払期日</option>
         <option value="1">末日</option>
       </select>
-      @error('deadline1')
+      @error('deadline2')
           <div class="text-danger"><small>{{$message}}</small></div>
       @enderror
     </div>
@@ -345,5 +357,6 @@
         })
     });
     </script>
+    
 @endpush
 @endsection

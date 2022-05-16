@@ -10,6 +10,7 @@ use App\Mail\NewEmployeeCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\PostalCode;
 
 class EmployeeController extends Controller
 {
@@ -37,10 +38,9 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return view("employees.create");
-        
+        return view("employees.create");  
     }
-
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -66,7 +66,7 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        return view("employees.create");
+        return view("employees.create",compact('employee'));
     }
 
     /**
@@ -77,7 +77,7 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        //
+        return view("employees.edit",compact('employee'));
     }
 
     /**
@@ -89,7 +89,28 @@ class EmployeeController extends Controller
      */
     public function update(UpdateEmployeeRequest $request, Employee $employee)
     {
-        //
+        /*$request->validate([
+            'id' => 'required',
+            'name' => 'required',
+            'zip_code'=> 'required',
+            'address1' => 'required',
+            'address2' => 'required',
+            'telephone' => 'required',
+            'dept1' => 'required',
+            'dept2' => 'required',
+            'in_charge_id' => 'required',
+            'payment_method' => 'required',
+            'deadline1'=>'required',
+            'deadline2'=>'required',
+            'remark' => 'required',
+            'noti' => 'required',
+            'deleted_at'=>'required',
+        ]);*/
+    
+        $employee->update($request->all());
+    
+        return redirect()->route('employees.index')
+                        ->with('success','Employee updated successfully');
     }
 
     /**
@@ -110,35 +131,36 @@ class EmployeeController extends Controller
         return $employee->employees()->count() ? true : false;
     }
 
+    //データ出力ボタンを押下時、下記の処理すする
     public function exportCSV()
-  {
-      return response()->streamDownload(function () {
-      $users = Employee::all()->toArray();
-      $head = [
-            'id',
-            'name',
-            'zipcode',
-            'add1',
-            'add2',
-            'telephone',
-            'dept1',
-            'dept2',
-            '-',
-            'payment-method',
-            '-',
-            '-',
-            'remark',
-            '-',
-      ];
-        $handle = fopen('php://output', 'w');
-        mb_convert_variables('SJIS', 'UTF-8', $head);
-        fputcsv($handle, $head);
-        foreach ($users as $row) {
-            mb_convert_variables('SJIS', 'UTF-8', $row);
-            fputcsv($handle, $row);
-        }
-        fclose($handle);
-    }, 'sample.csv');
-  }
-        
+    {
+        return response()->streamDownload(function () {
+        $employee = Employee::all()->toArray();
+        $head = [
+                'id',
+                'name',
+                'zipcode',
+                'add1',
+                'add2',
+                'telephone',
+                'dept1',
+                'dept2',
+                '-',
+                'payment-method',
+                '-',
+                '-',
+                'remark',
+                '-',
+        ];
+            $handle = fopen('php://output', 'w');
+            mb_convert_variables('SJIS', 'UTF-8', $head);
+            fputcsv($handle, $head);
+            foreach ($employee as $emp) {
+                mb_convert_variables('SJIS', 'UTF-8', $emp);
+                fputcsv($handle, $emp);
+            }
+            fclose($handle);
+        }, 'sample.csv');
+    }  
+
 }
