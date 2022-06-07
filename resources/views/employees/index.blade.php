@@ -5,27 +5,49 @@
 	  <!-- Search -->
 	  <form id="search_form" class="my-2 my-md-0">
 		<div class="form-group">
-		  <div class="col-sm-4 p-0">
+		  <div class="col-sm-12 p-0">
 			<div class="input-group">
-			  <input
-				type="text"
-				name="search"
-				value="{{request()->get("search")}}"
-				class="form-control"
-				placeholder="Search"
-				aria-label="Search"
-				aria-describedby="button-addon4"
-				style="border-color: #6c757d; border-right: none"
-			  />
-			  <div class="input-group-append" id="button-addon4">
-				<button
-				  id="reset_btn"
-				  class="btn btn-outline-secondary"
-				  type="button"
-				  style="border-left: none"
+				<span
+				  class="input-group-text"
+				  id="basic-addon1"
+				  style="border: none; background-color: white"
+				  >契約企業ID</span
 				>
-				  ×
-				</button>
+				<input
+				  type="text"
+				  class="form-control"
+				  placeholder="999999"
+				  aria-label="kigyoID"
+				  aria-describedby="basic-addon1"
+				/>
+				<span
+				  class="input-group-text"
+				  id="basic-addon2"
+				  style="border: none; background-color: white"
+				  >企業名
+				</span>
+				<input
+				  type="text"
+				  class="form-control"
+				  placeholder="NEXT株式会社"
+				  aria-label="KigyoName"
+				  aria-describedby="basic-addon2"
+				/>
+				<span
+				  class="input-group-text"
+				  id="basic-addon3"
+				  style="border: none; background-color: white"
+				  >TEL</span
+				>
+				<input
+				  type="text"
+				  id="search"
+				  name = "search"
+				  value="{{request()->get("search")}}"
+				  class="form-control"
+				  placeholder="03-XXXX-XXXX"
+				/>
+	  
 				<button
 				  type="submit"
 				  class="btn btn-outline-secondary"
@@ -33,8 +55,8 @@
 				>
 				  <svg
 					xmlns="http://www.w3.org/2000/svg"
-					width="16"
-					height="16"
+					width="13"
+					height="13"
 					fill="currentColor"
 					class="bi bi-search"
 					viewBox="0 0 16 16"
@@ -45,7 +67,8 @@
 				  </svg>
 				</button>
 			  </div>
-			</div>
+
+	
 		  </div>
 		</div>
 
@@ -85,7 +108,7 @@
 
 		<div class="table-responsive">
 		  <table class="table table-bordered table-hover list-table">
-			<thead>
+			<thead style="background-color: #bef5d6">
 			  <tr>
 				<th></th>
 				<th scope="col">企業ID</th>
