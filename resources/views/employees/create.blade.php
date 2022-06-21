@@ -62,8 +62,8 @@
       <div class="input-group form-number">
         <input
           type="text"
-          name="zip_code"
-          id="zip_code"
+          name="zipcode"
+          id="zipcode"
           class="form-control"
           title="郵便番号"
           placeholder="000-0000"
@@ -74,9 +74,10 @@
         <div class="input-group-append" id="button-addon4">
           <button
             type="button"
+            name="search"
             class="btn btn-outline-secondary form-control"
             style="color: #0d6efd"
-            id="search_btn"
+            id="search"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -91,6 +92,7 @@
               ></path>
             </svg>
           </button>
+          <p id="error"></p>
         </div>
       </div>
     </div>
@@ -150,8 +152,7 @@
   </div>
   <div class="form-group row">
     <label for="dept1" class="col-sm-3 col-form-label form-label"
-      ><span class="required">※</span>部署1</label
-    >
+      ><span class="required">※</span>部署1</label>
     <div class="col-sm-6">
       <input
         type="text"
@@ -357,6 +358,38 @@
         })
     });
     </script>
-    
+    //search adddress by postalcode
+    <script>
+      let search = document.getElementById('search');
+      search.addEventListener('click', ()=>{
+          
+          let api = 'https://zipcloud.ibsnet.co.jp/api/search?zipcode=';
+          let error = document.getElementById('error');
+          let input = document.getElementById('zipcode');
+          let address1 = document.getElementById('address1');
+          let param = input.value.replace("-",""); //入力された郵便番号から「-」を削除
+          let url = api + param;
+          
+          fetch(url, {
+              timeout: 10000, //タイムアウト時間
+          })
+          .then((response)=>{
+              error.textContent = ''; //HTML側のエラーメッセージ初期化
+              return response.json();  
+          })
+          .then((data)=>{
+              if(data.status === 400){ //エラー時
+                  error.textContent = data.message;
+              }else if(data.results === null){
+                  error.textContent = '郵便番号から住所が見つかりませんでした。';
+              } else {
+                  address1.value = data.results[0].address1;
+              }
+          })
+          .catch((ex)=>{ //例外処理
+              console.log(ex);
+          });
+      }, false);
+  </script>
 @endpush
 @endsection
