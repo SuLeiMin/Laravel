@@ -92,24 +92,6 @@ class EmployeeController extends Controller
      */
     public function update(UpdateEmployeeRequest $request, Employee $employee)
     {
-        /*$request->validate([
-            'id' => 'required',
-            'name' => 'required',
-            'zip_code'=> 'required',
-            'address1' => 'required',
-            'address2' => 'required',
-            'telephone' => 'required',
-            'dept1' => 'required',
-            'dept2' => 'required',
-            'in_charge_id' => 'required',
-            'payment_method' => 'required',
-            'deadline1'=>'required',
-            'deadline2'=>'required',
-            'remark' => 'required',
-            'noti' => 'required',
-            'deleted_at'=>'required',
-        ]);*/
-    
         $employee->update($request->all());
     
         return redirect()->route('employees.index')
@@ -134,7 +116,6 @@ class EmployeeController extends Controller
         return $employee->employees()->count() ? true : false;
     }
 
-    //データ出力ボタンを押下時、下記の処理すする
     public function exportCSV()
     {
         return response()->streamDownload(function () {

@@ -62,8 +62,8 @@
       <div class="input-group form-number">
         <input
           type="text"
-          name="zipcode"
-          id="zipcode"
+          name="zip_code"
+          id="zip_code"
           class="form-control"
           title="郵便番号"
           placeholder="000-0000"
@@ -358,27 +358,27 @@
         })
     });
     </script>
-    //search adddress by postalcode
+    
     <script>
       let search = document.getElementById('search');
       search.addEventListener('click', ()=>{
           
           let api = 'https://zipcloud.ibsnet.co.jp/api/search?zipcode=';
           let error = document.getElementById('error');
-          let input = document.getElementById('zipcode');
+          let input = document.getElementById('zip_code');
           let address1 = document.getElementById('address1');
-          let param = input.value.replace("-",""); //入力された郵便番号から「-」を削除
+          let param = input.value.replace("-",""); 
           let url = api + param;
           
           fetch(url, {
-              timeout: 10000, //タイムアウト時間
+              timeout: 10000, 
           })
           .then((response)=>{
-              error.textContent = ''; //HTML側のエラーメッセージ初期化
+              error.textContent = ''; 
               return response.json();  
           })
           .then((data)=>{
-              if(data.status === 400){ //エラー時
+              if(data.status === 400){
                   error.textContent = data.message;
               }else if(data.results === null){
                   error.textContent = '郵便番号から住所が見つかりませんでした。';
@@ -386,7 +386,7 @@
                   address1.value = data.results[0].address1;
               }
           })
-          .catch((ex)=>{ //例外処理
+          .catch((ex)=>{ 
               console.log(ex);
           });
       }, false);

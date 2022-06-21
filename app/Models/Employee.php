@@ -20,8 +20,6 @@ class Employee extends Model
         "dept2",
         "in_charge_id",
         "payment_method",
-        //"deadline1",
-        //"deadline2",
         "remark",
         "noti",
     ];
