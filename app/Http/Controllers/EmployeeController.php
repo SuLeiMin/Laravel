@@ -24,7 +24,10 @@ class EmployeeController extends Controller
         $search = $request->input('search');
         $items = Employee::where(function($q) use($request){
             if($request->filled("search")){
-                $q->where('telephone', 'LIKE', "%{$request->get('search')}%");
+                $q->where('id', 'LIKE', "%{$request->get('search')}%")   
+                  ->orWhere('name', 'LIKE', "%{$request->get('search')}%")
+                  ->orWhere('telephone', 'LIKE', "%{$request->get('search')}%")
+                  ->get();
             }
         })->paginate();
     

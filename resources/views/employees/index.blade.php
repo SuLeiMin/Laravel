@@ -15,6 +15,9 @@
 				>
 				<input
 				  type="text"
+				  id="search"
+				  name = "search"
+				  value="{{request()->get("search")}}"
 				  class="form-control"
 				  placeholder="999999"
 				  aria-label="kigyoID"
@@ -28,6 +31,9 @@
 				</span>
 				<input
 				  type="text"
+				  id="search"
+				  name = "search"
+				  value="{{request()->get("search")}}"
 				  class="form-control"
 				  placeholder="NEXT株式会社"
 				  aria-label="KigyoName"
