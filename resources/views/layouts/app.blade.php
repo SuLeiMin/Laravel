@@ -10,7 +10,29 @@
     <link href="{{asset("css/bootstrap.min.css")}}" rel="stylesheet" />
     <!-- Custom styles -->
     <link href="{{asset("css/common.css")}}" rel="stylesheet" />
-    <style></style>
+    <style>
+      div#footer {
+        background-color: #ffffff;
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+      }
+      ul.nav {
+        float: center;
+        list-style: none;
+        width: 45%;
+      }
+      ul.nav li {
+        float: center;
+      }
+      ul.nav a {
+        line-height: 40px;
+        color: #ffffff;
+        padding: 0 15px;
+        text-decoration: none;
+      }
+    </style>
   </head>
   <body>
     <!-- Navigation -->
@@ -48,14 +70,15 @@
 
     @yield("content")
 
+    <br><br><br><br>
     <!-- Footer -->
-    <div class="container">
-        <footer>
-          <p class="text-center text-muted">
-            Copyright &copy; NEXT Co., Ltd. All Rights Reserved.
-          </p>
-        </footer>
+    <div id="footer">
+      <div class="navbar navbar-expand-sm bg-light justify-content-center">
+        <ul class="nav justify-content-center">
+          <li>Copyright &copy; NEXT Co., Ltd. All Rights Reserved.</li>
+        </ul>
       </div>
+    </div>
   
       <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
       <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>

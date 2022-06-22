@@ -20,7 +20,11 @@ class Employee extends Model
         "dept2",
         "in_charge_id",
         "payment_method",
+        "billingdate",
+        "paymentdate",
         "remark",
+        "remark2",
+        "remark3",
         "noti",
     ];
 }

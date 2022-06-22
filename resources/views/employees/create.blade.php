@@ -1,19 +1,38 @@
-@extends('layouts.app', ["title" => "契約企業情報登録"])
+@extends('layouts.app', ["title" => "契約企業情報登録・修正"])
 
 @section('content')
 <div class="container">
 <form class="text-left" id="form" action="{{route("employees.store")}}" method="POST">
   @csrf
   <input type="hidden" name="company_id" id="company_id" value="999999" />
+  @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+  @endif
+
   <div class="form-signin">
     <div class="form-group row">
-      <div class="col-sm-4 offset-sm-2">
+      <div class="col-sm-3 offset-sm-2">
         <button
           type="submit"
           id="save_btn"
           class="btn btn-lg btn-primary btn-block"
         >
           保存
+        </button>
+      </div>
+      <div class="col-sm-3">
+        <button
+          type="button"
+          id="delete_btn"
+          class="btn btn-lg btn-primary btn-block"
+        >
+          削除
         </button>
       </div>
       <div class="col-sm-4">
@@ -25,21 +44,25 @@
           キャンセル
         </button>
       </div>
+      <div class="col-sm-4 text-center">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="required">※</span>は必須項目
+      </div>
     </div>
   </div>
   <div class="form-group row">
-    <div class="col-sm-3 form-label">
-      <p>企業ID</p>
+    <div class="col-sm-2 form-label text-left">
+      <p>契約企業ID</p>
     </div>
-    <div class="col-sm-6 form-text-offset">
+    <div class="col-sm-4 form-text-offset">
       <p>-</p>
     </div>
   </div>
   <div class="form-group row">
-    <label for="name" class="col-sm-3 col-form-label form-label"
-      ><span class="required">※</span>企業名</label
+    <label for="name" class="col-sm-2 col-form-label form-label text-left"
+      >企業名<span class="required">※</span></label
     >
-    <div class="col-sm-6">
+    <div class="col-sm-4">
       <input
         type="text"
         name="name"
@@ -55,10 +78,10 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="zip_code" class="col-sm-3 col-form-label form-label"
-      ><span class="required">※</span>郵便番号</label
+    <label for="zip_code" class="col-sm-2 col-form-label form-label text-left"
+      >郵便番号<span class="required">※</span></label
     >
-    <div class="col-sm-6">
+    <div class="col-sm-4">
       <div class="input-group form-number">
         <input
           type="text"
@@ -98,10 +121,10 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="address1" class="col-sm-3 col-form-label form-label"
-      ><span class="required">※</span>住所1</label
+    <label for="address1" class="col-sm-2 col-form-label form-label text-left"
+      >住所1<span class="required">※</span></label
     >
-    <div class="col-sm-6">
+    <div class="col-sm-4">
       <input
         type="text"
         name="address1"
@@ -117,10 +140,10 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="address2" class="col-sm-3 col-form-label form-label"
+    <label for="address2" class="col-sm-2 col-form-label form-label text-left"
       >住所2</label
     >
-    <div class="col-sm-6">
+    <div class="col-sm-4">
       <input
         type="text"
         name="address2"
@@ -132,10 +155,10 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="telephone" class="col-sm-3 col-form-label form-label"
-      ><span class="required">※</span>TEL</label
+    <label for="telephone" class="col-sm-2 col-form-label form-label text-left"
+      >TEL<span class="required">※</span></label
     >
-    <div class="col-sm-6">
+    <div class="col-sm-4">
       <input
         type="text"
         name="telephone"
@@ -151,9 +174,9 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="dept1" class="col-sm-3 col-form-label form-label"
-      ><span class="required">※</span>部署1</label>
-    <div class="col-sm-6">
+    <label for="dept1" class="col-sm-2 col-form-label form-label text-left"
+      >部署1<span class="required">※</span></label>
+    <div class="col-sm-4">
       <input
         type="text"
         name="dept1"
@@ -169,14 +192,14 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="department2" class="col-sm-3 col-form-label form-label"
+    <label for="department2" class="col-sm-2 col-form-label form-label text-left"
       >部署2</label
     >
-    <div class="col-sm-6">
+    <div class="col-sm-4">
       <input
         type="text"
-        name="department2"
-        id="department2"
+        name="dept2"
+        id="dept2"
         class="form-control"
         title="部署2"
         placeholder=""
@@ -184,10 +207,10 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="in_charge_id" class="col-sm-3 col-form-label form-label"
-      ><span class="required">※</span>担当者氏名</label
+    <label for="in_charge_id" class="col-sm-2 col-form-label form-label text-left"
+      >担当者氏名<span class="required">※</span></label
     >
-    <div class="col-sm-3">
+    <div class="col-sm-2">
       <select
         name="in_charge_id"
         id="in_charge_id"
@@ -201,28 +224,28 @@
           <div class="text-danger"><small>{{$message}}</small></div>
       @enderror
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-4">
       <button
         type="button"
         id="add_tantousya_btn"
         class="btn btn-primary btn-sm mr-2 px-3"
       >
-        追加
+        登録
       </button>
       <button
         type="button"
         id="edit_tantousya_btn"
         class="btn btn-primary btn-sm px-3"
       >
-        修正
+        編集・削除
       </button>
     </div>
   </div>
   <div class="form-group row">
-    <label for="payment_method" class="col-sm-3 col-form-label form-label"
+    <label for="payment_method" class="col-sm-2 col-form-label form-label text-left"
       >決済方法</label
     >
-    <div class="col-sm-3">
+    <div class="col-sm-2">
       <select
         name="payment_method"
         id="payment_method"
@@ -240,10 +263,10 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="deadline1" class="col-sm-3 col-form-label form-label"
-      ><span class="required">※</span>請求締日</label
+    <label for="deadline1" class="col-sm-2 col-form-label form-label text-left"
+      >請求締日<span class="required">※</span></label
     >
-    <div class="col-sm-3">
+    <div class="col-sm-2">
       <select
         name="deadline1"
         id="deadline1"
@@ -259,10 +282,10 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="deadline2" class="col-sm-3 col-form-label form-label"
-      ><span class="required">※</span>支払期日</label
+    <label for="deadline2" class="col-sm-2 col-form-label form-label text-left"
+      >支払期日<span class="required">※</span></label
     >
-    <div class="col-sm-3">
+    <div class="col-sm-2">
       <select
         name="deadline2"
         id="deadline2"
@@ -280,9 +303,8 @@
   <div class="form-group row">
     <label
       for="remark"
-      class="col-sm-3 col-form-label form-label"
-      >請求書備考</label
-    >
+      class="col-sm-2 col-form-label form-label text-left"
+      >請求書備考</label>
     <div class="col-sm-8">
       <textarea
         name="remark"
@@ -295,13 +317,45 @@
     </div>
   </div>
   <div class="form-group row">
-    <div class="col-sm-3 form-label">
+    <label
+      for="remark2"
+      class="col-sm-2 col-form-label form-label text-left"
+      >請求書備考2</label>
+    <div class="col-sm-8">
+      <textarea
+        name="remark2"
+        id="remark2"
+        class="form-control"
+        cols="50"
+        rows="2"
+        title="請求書備考"
+      ></textarea>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label
+      for="remark3"
+      class="col-sm-2 col-form-label form-label text-left"
+      >請求書備考2</label>
+    <div class="col-sm-8">
+      <textarea
+        name="remark3"
+        id="remark3"
+        class="form-control"
+        cols="50"
+        rows="2"
+        title="請求書備考"
+      ></textarea>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-2 form-label text-left">
       <p>登録日</p>
     </div>
-    <div class="col-sm-3 form-text-offset">
+    <div class="col-sm-2 form-text-offset">
       <p>2021/11/22</p>
     </div>
-    <div class="col-sm-3 form-label">
+    <div class="col-sm-2 form-label">
       <p>変更日</p>
     </div>
     <div class="col-sm-3 form-text-offset">
@@ -309,10 +363,10 @@
     </div>
   </div>
   <div class="form-group row">
-    <div class="col-sm-3 form-label">
+    <div class="col-sm-2 form-label text-left">
       <p>登録メール通知</p>
     </div>
-    <div class="col-sm-5 form-text-offset">
+    <div class="col-sm-4 form-text-offset">
       <label>
         <input
           type="checkbox"
@@ -348,7 +402,6 @@
         $("#edit_tantousya_btn").on("click", function () {
         location.href = "./tantousya.html";
         });
-
         $("#email_send").on("change", function(){
           if($(this).is(":checked")){
             if(!confirm("Are you sure to send noti?")){

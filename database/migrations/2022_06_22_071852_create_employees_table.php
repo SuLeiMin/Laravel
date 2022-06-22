@@ -24,9 +24,11 @@ class CreateEmployeesTable extends Migration
             $table->string('dept2')->nullable();
             $table->unsignedInteger('in_charge_id');
             $table->enum("payment_method", ["credit", "debit", "invoice"]);
-            $table->date("deadline1")->nullable();
-            $table->date("deadline2")->nullable();
+            $table->enum("billingdate",["lastday"]);
+            $table->enum("paymentdate",["lastday"]);
             $table->text("remark")->nullable();
+            $table->text("remark2")->nullable();
+            $table->text("remark3")->nullable();
             $table->boolean("noti")->default(0);
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();

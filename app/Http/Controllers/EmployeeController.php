@@ -52,8 +52,9 @@ class EmployeeController extends Controller
      */
     public function store(StoreEmployeeRequest $request)
     {
+      
         $employee = Employee::create($request->validated());
-
+        
         if($request->filled("noti")){
             Mail::to(env("MAIL_ADMIN_EMAIL"))->send(new NewEmployeeCreated($employee));
         }
@@ -129,12 +130,17 @@ class EmployeeController extends Controller
                 'telephone',
                 'dept1',
                 'dept2',
-                '-',
+                'in_charge_id',
                 'payment-method',
-                '-',
-                '-',
+                'billingdate',
+                'paymentdate',
                 'remark',
-                '-',
+                'remark2',
+                'remark3',
+                'noti',
+                'deleted_at',
+                'created_at',
+                'updated_at',
         ];
             $handle = fopen('php://output', 'w');
             mb_convert_variables('SJIS', 'UTF-8', $head);

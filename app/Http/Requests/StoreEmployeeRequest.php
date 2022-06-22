@@ -36,6 +36,8 @@ class StoreEmployeeRequest extends FormRequest
             "deadline1" => ["required"],
             "deadline2" => ["required"],
             "remark" => ["nullable"],
+            "remark2"=>["nullable"],
+            "remark3"=>["nullable"],
             "noti" => ["nullable"],
         ];
     }
