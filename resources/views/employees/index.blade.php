@@ -168,11 +168,11 @@
 				<th scope="col">TEL</th>
 				<th scope="col">部署1</th>
 				<th scope="col">部署2</th>
-				<th scope="col">○○○</th>
-				<th scope="col">○○○</th>
-				<th scope="col">○○○</th>
-				<th scope="col">○○○</th>
-				<th scope="col">○○○</th>
+				<th scope="col">契約番号</th>
+                <th scope="col">所定労働時間</th>
+                <th scope="col">休憩時間</th>
+                <th scope="col">勤務曜日</th>
+                <th scope="col">契約期間</th>
 			  </tr>
 			</thead>
 			<tbody>
