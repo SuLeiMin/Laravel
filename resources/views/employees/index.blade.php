@@ -1,4 +1,4 @@
-@extends('layouts.app', ["title" => "契約企業一覧"])
+@extends('layouts.app', ["title" => "契約企業管理"])
 	
 @section('content')
 	<div class="container">
@@ -38,6 +38,38 @@
 				  placeholder="NEXT株式会社"
 				  aria-label="KigyoName"
 				  aria-describedby="basic-addon2"
+				/>
+				<span
+				  class="input-group-text"
+				  id="basic-addon1"
+				  style="border: none; background-color: white"
+				  >郵便番号</span
+				>
+				<input
+				  type="text"
+				  id="search"
+				  name = "search"
+				  value="{{request()->get("search")}}"
+				  class="form-control"
+				  placeholder="999999"
+				  aria-label="kigyoID"
+				  aria-describedby="basic-addon1"
+				/>
+				<span
+				  class="input-group-text"
+				  id="basic-addon1"
+				  style="border: none; background-color: white"
+				  >住所</span
+				>
+				<input
+				  type="text"
+				  id="search"
+				  name = "search"
+				  value="{{request()->get("search")}}"
+				  class="form-control"
+				  placeholder="999999"
+				  aria-label="kigyoID"
+				  aria-describedby="basic-addon1"
 				/>
 				<span
 				  class="input-group-text"
@@ -87,6 +119,9 @@
 			</button>
 			<button type="button" disabled class="btn btn-primary" id="delete_btn">
 				削除
+			</button>
+			<button type="button" class="btn btn-danger" id="back_btn">
+				戻る
 			</button>
 			   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -233,6 +268,10 @@
 			// 検索リセット
 			$("#reset_btn").on("click", function () {
 			$("#search_form")[0].reset();
+			});
+			// 戻る
+			$("#back_btn").on("click", function () {
+				location.href = "./top.html";
 			});
 		});
 		// レコード選択チェック

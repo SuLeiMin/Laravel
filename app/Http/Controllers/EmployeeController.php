@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\EmployeesExport;
 use App\Models\Employee;
+use App\Models\Payment;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Mail\NewEmployeeCreated;
@@ -26,6 +27,8 @@ class EmployeeController extends Controller
             if($request->filled("search")){
                 $q->where('id', 'LIKE', "%{$request->get('search')}%")   
                   ->orWhere('name', 'LIKE', "%{$request->get('search')}%")
+                  ->orWhere('address1', 'LIKE', "%{$request->get('search')}%")
+                  ->orWhere('zip_code', 'LIKE', "%{$request->get('search')}%")
                   ->orWhere('telephone', 'LIKE', "%{$request->get('search')}%")
                   ->get();
             }
@@ -79,9 +82,10 @@ class EmployeeController extends Controller
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function edit(Employee $employee)
+    public function edit(Employee $employee,Payment $payment)
     {
-        return view("employees.edit",compact('employee'));
+        $payment = Payment::all();
+        return view("employees.edit",compact('employee','payment'));
     }
 
     /**

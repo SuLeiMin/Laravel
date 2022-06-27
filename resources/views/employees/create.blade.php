@@ -1,4 +1,4 @@
-@extends('layouts.app', ["title" => "契約企業情報登録・修正"])
+@extends('layouts.app', ["title" => "契約企業情報"])
 
 @section('content')
 <div class="container">
@@ -26,15 +26,7 @@
           保存
         </button>
       </div>
-      <div class="col-sm-3">
-        <button
-          type="button"
-          id="delete_btn"
-          class="btn btn-lg btn-primary btn-block"
-        >
-          削除
-        </button>
-      </div>
+
       <div class="col-sm-4">
         <button
           type="button"
@@ -230,14 +222,14 @@
         id="add_tantousya_btn"
         class="btn btn-primary btn-sm mr-2 px-3"
       >
-        登録
+        追加
       </button>
       <button
         type="button"
         id="edit_tantousya_btn"
         class="btn btn-primary btn-sm px-3"
       >
-        編集・削除
+        修正
       </button>
     </div>
   </div>
@@ -254,7 +246,7 @@
       >
         <option value="">決済方法</option>
         <option value="1">クレジットカード</option>
-        <option value="2">請求書発行</option>
+        <option value="2" selected>請求書発行</option>
         <option value="3">口座引き落とし</option>
       </select>
       @error('payment_method')
