@@ -114,10 +114,10 @@
 			<a href="{{route("employees.create")}}" class="btn btn-primary" id="entry_btn">
 				登録
 			</a>
-			<button type="button" disabled class="btn btn-primary" id="edit_btn">
+			<button type="button"  class="btn btn-primary" id="edit_btn">
 				編集
 			</button>
-			<button type="button" disabled class="btn btn-primary" id="delete_btn">
+			<button type="button"  class="btn btn-primary" id="delete_btn">
 				削除
 			</button>
 			<button type="button" class="btn btn-danger" id="back_btn">
@@ -231,7 +231,7 @@
 			// 削除処理
 			$("#delete_btn").on("click", function () {
 			if ((selno = chk_selno())) {
-				if (!confirm("本当に削除しますか？")) {
+				if (!confirm("削除しますか？")) {
 				// キャンセル
 				return false;
 				} else {
@@ -254,6 +254,7 @@
 						success: function(res){
 							alert(selno + "が削除されました");
 							location.reload();
+							location.href = "./top.html";
 						}
 						})
 					}else{
@@ -283,10 +284,7 @@
 			}
 			return selno;
 		}
-		$(".sel_item").on("change", function(){
-			$("#edit_btn").attr("disabled", false);
-			$("#delete_btn").attr("disabled", false);
-		})
+		
 		</script>
 	@endpush
 @endsection

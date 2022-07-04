@@ -17,16 +17,24 @@
 
   <div class="form-signin">
     <div class="form-group row">
-      <div class="col-sm-3 offset-sm-2">
+      <div class="col-sm-3">
         <button
-          type="submit"
+          type="button"
           id="save_btn"
           class="btn btn-lg btn-primary btn-block"
         >
           保存
         </button>
       </div>
-
+      <div class="col-sm-3">
+        <button
+          type="button"
+          id="delete_btn"
+          class="btn btn-lg btn-primary btn-block"
+        >
+          削除
+        </button>
+      </div>
       <div class="col-sm-4">
         <button
           type="button"
@@ -37,7 +45,6 @@
         </button>
       </div>
       <div class="col-sm-4 text-center">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <span class="required">※</span>は必須項目
       </div>
     </div>
@@ -222,14 +229,14 @@
         id="add_tantousya_btn"
         class="btn btn-primary btn-sm mr-2 px-3"
       >
-        追加
+        登録
       </button>
       <button
         type="button"
         id="edit_tantousya_btn"
         class="btn btn-primary btn-sm px-3"
       >
-        修正
+        編集 . 削除
       </button>
     </div>
   </div>
@@ -378,9 +385,18 @@
     $(function () {
         // 保存
         $("#save_btn").on("click", function () {
-          if(confirm("Are you sure to save?")){
-            $("#form").submit();
+          if ($("#email_send:checked").val()) {
+            if (!confirm("登録内容をメール通知しますか？")) {
+              // キャンセル
+              return false;
+            }
           }
+          if (!confirm("登録内容を保存しますか？")) {
+            // キャンセル
+            return false;
+          }
+          alert("保存されました。");
+          location.href = "{{route("employees.index")}}";
         });
         // キャンセル
         $("#cancel_btn").on("click", function () {
@@ -396,11 +412,24 @@
         });
         $("#email_send").on("change", function(){
           if($(this).is(":checked")){
-            if(!confirm("Are you sure to send noti?")){
+            if(!confirm("メールを通知しますか?")){
               $(this).prop("checked", false);
             }
           }
-        })
+        });
+         // 削除処理
+      $("#delete_btn").on("click", function () {
+        if (!confirm("本当に削除しますか？")) {
+          // キャンセル
+          return false;
+        } else {
+          // 実行
+          alert("就業中の契約があるため削除できません。");
+          return false;
+          // alert("削除されました");
+          // location.reload();
+        }
+      });
     });
     </script>
     
