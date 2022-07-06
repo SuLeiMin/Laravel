@@ -5,16 +5,7 @@
 <form class="text-left" id="form" action="{{route("employees.store")}}" method="POST">
   @csrf
   <input type="hidden" name="company_id" id="company_id" value="999999" />
-  @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-  @endif
-
+  
   <div class="form-signin">
     <div class="form-group row">
       <div class="col-sm-3">
@@ -114,9 +105,12 @@
               ></path>
             </svg>
           </button>
-          <p id="error"></p>
+          <p id="error"></p> 
         </div>
       </div>
+      @error('telephone')
+        <div class="text-danger"><small>{{$message}}</small></div>
+      @enderror
     </div>
   </div>
   <div class="form-group row">
@@ -220,7 +214,7 @@
         <option value="9999">9999　富永　暁子</option>
       </select>
       @error('in_charge_id')
-          <div class="text-danger"><small>{{$message}}</small></div>
+      <div class="text-danger"><small>{{$message}}</small></div>
       @enderror
     </div>
     <div class="col-sm-4">
@@ -275,15 +269,12 @@
         <option value="">請求締日</option>
         <option value="1">末日</option>
       </select>
-      @error('deadline1')
-          <div class="text-danger"><small>{{$message}}</small></div>
-      @enderror
+  
     </div>
   </div>
   <div class="form-group row">
     <label for="deadline2" class="col-sm-2 col-form-label form-label text-left"
-      >支払期日<span class="required">※</span></label
-    >
+      >支払期日<span class="required">※</span></label>
     <div class="col-sm-2">
       <select
         name="deadline2"
@@ -294,9 +285,6 @@
         <option value="">支払期日</option>
         <option value="1">末日</option>
       </select>
-      @error('deadline2')
-          <div class="text-danger"><small>{{$message}}</small></div>
-      @enderror
     </div>
   </div>
   <div class="form-group row">
@@ -382,55 +370,62 @@
 </div>
 @push("js")
     <script>
-    $(function () {
+      $(function () {
         // 保存
         $("#save_btn").on("click", function () {
           if ($("#email_send:checked").val()) {
             if (!confirm("登録内容をメール通知しますか？")) {
-              // キャンセル
               return false;
             }
-          }
+        }
           if (!confirm("登録内容を保存しますか？")) {
             // キャンセル
             return false;
           }
-          alert("保存されました。");
-          location.href = "{{route("employees.index")}}";
+          $("#form").submit();
+         // alert("保存されました。");
         });
+
         // キャンセル
         $("#cancel_btn").on("click", function () {
         location.href = "{{route("employees.index")}}";
         });
+
         // 担当者追加
         $("#add_tantousya_btn").on("click", function () {
         location.href = "./tantousya.html";
         });
+
         // 担当者修正
         $("#edit_tantousya_btn").on("click", function () {
         location.href = "./tantousya.html";
         });
-        $("#email_send").on("change", function(){
+
+        /*$("#email_send").on("change", function(){
           if($(this).is(":checked")){
-            if(!confirm("メールを通知しますか?")){
-              $(this).prop("checked", false);
+            if(!confirm("Are you sure to send noti?")){
+              $(this).prop("checked", true);
             }
           }
+        });*/
+      
+        // 削除処理
+        $("#delete_btn").on("click", function () {
+          if (!confirm("本当に削除しますか？")) {
+            // キャンセル
+            return false;
+          } else {
+            // 実行
+            alert("就業中の契約があるため削除できません。");
+            return false;
+          }
         });
-         // 削除処理
-      $("#delete_btn").on("click", function () {
-        if (!confirm("本当に削除しますか？")) {
-          // キャンセル
-          return false;
-        } else {
-          // 実行
-          alert("就業中の契約があるため削除できません。");
-          return false;
-          // alert("削除されました");
-          // location.reload();
+   
+        //削除ボタンを消すこと
+        if ( localStorage.getItem('entry_btn') !== null ) {
+            $('#delete_btn').hide();
         }
       });
-    });
     </script>
     
     <script>

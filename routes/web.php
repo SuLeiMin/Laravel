@@ -29,7 +29,7 @@ Route::middleware("auth")->group(function(){
     Route::get('download',[EmployeeController::class,"exportCSV"]);
     Route::resource("employees", EmployeeController::class);
     Route::get("employees/{company}/can-delete", [EmployeeController::class, "canDelete"])->name("employees.can-delete");
-    
+    Route::get("/search",[EmployeeController::class,'search']);
 });
 
 

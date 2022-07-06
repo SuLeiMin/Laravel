@@ -20,21 +20,23 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $search = $request->input('search');
-        $items = Employee::where(function($q) use($request){
-            if($request->filled("search")){
-                $q->where('id', 'LIKE', "%{$request->get('search')}%")   
-                  ->orWhere('name', 'LIKE', "%{$request->get('search')}%")
-                  ->orWhere('address1', 'LIKE', "%{$request->get('search')}%")
-                  ->orWhere('zip_code', 'LIKE', "%{$request->get('search')}%")
-                  ->orWhere('telephone', 'LIKE', "%{$request->get('search')}%")
-                  ->get();
-            }
-        })->paginate();
-    
+       $items = Employee::paginate(8);
+       return view('employees.index', compact('items'));
+    }
+
+    // 検索ボタンの処理
+    public function search(){
+        $search = $_GET['search'];
+        $items = Employee::where('id','LIKE','%'.$search.'%')
+                ->orwhere('name', 'like', '%'.$search.'%')
+                ->orwhere('zip_code', 'like', '%'.$search.'%')
+                ->orwhere('address1', 'like', '%'.$search.'%')
+                ->orwhere('telephone', 'like', '%'.$search.'%')
+                ->get();
         return view('employees.index', compact('items'));
+        
     }
 
     /**
@@ -55,13 +57,10 @@ class EmployeeController extends Controller
      */
     public function store(StoreEmployeeRequest $request)
     {
-      
-        $employee = Employee::create($request->validated());
-        
+        $employee = Employee::create($request->validated());        
         if($request->filled("noti")){
             Mail::to(env("MAIL_ADMIN_EMAIL"))->send(new NewEmployeeCreated($employee));
         }
-
         return redirect()->route("employees.index");
     }
 
@@ -98,7 +97,6 @@ class EmployeeController extends Controller
     public function update(UpdateEmployeeRequest $request, Employee $employee)
     {
         $employee->update($request->all());
-    
         return redirect()->route('employees.index')
                         ->with('success','Employee updated successfully');
     }
@@ -112,7 +110,6 @@ class EmployeeController extends Controller
     public function destroy(Employee $employee)
     {
         $employee->delete();
-
         return redirect()->route("employees.index");
     }
 

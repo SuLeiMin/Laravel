@@ -398,8 +398,14 @@
             location.href = "{{route("employees.index")}}";
           }
         });
-       
     });
+
+    $(function(){
+      // get the item 
+      if ( localStorage.getItem('edit_btn') !== null ) {
+        $('#delete_btn').hide();
+      }
+  });
     </script>
 @endpush
 @endsection

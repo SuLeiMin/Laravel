@@ -33,12 +33,33 @@ class StoreEmployeeRequest extends FormRequest
             "dept2" => ["nullable"],
             "in_charge_id" => ["required"],
             "payment_method" => ["required"],
-            "deadline1" => ["required"],
-            "deadline2" => ["required"],
+            "billingdate" => ["required"],
+            "paymentdate" => ["required"],
             "remark" => ["nullable"],
             "remark2"=>["nullable"],
             "remark3"=>["nullable"],
             "noti" => ["nullable"],
         ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        /*
+        return [
+            'name.required' => '名前を入力してください',
+            'address1.required' => '住所を入力してください',
+            'zip_code.required' => '郵便番号を入力してください',
+            'telephone.required' => '電話番号を入力してください',
+            'dept1.required' => '部署を入力してください',
+            'in_charge_id.required' => '担当者氏名を入力してください',
+            //'billingdate.required' => '請求締日を入力してください',
+            //'paymentdate.required' => '支払期日を入力してください',
+        ];
+        */
     }
 }
