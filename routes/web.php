@@ -25,11 +25,18 @@ Route::get('/', function () {
 });
 
 Route::middleware("auth")->group(function(){
-    
-    Route::get('download',[EmployeeController::class,"exportCSV"]);
-    Route::resource("employees", EmployeeController::class);
-    Route::get("employees/{company}/can-delete", [EmployeeController::class, "canDelete"])->name("employees.can-delete");
-    Route::get("/search",[EmployeeController::class,'search']);
-});
 
+    Route::get('download',[EmployeeController::class,"exportCSV"]);
+    Route::resource('employees', EmployeeController::class);
+    Route::get('employees/{company}/can-delete', [EmployeeController::class, 'canDelete'])->name('employees.can-delete');
+    Route::get("/search",[EmployeeController::class,'search']);
+    /*Route::get('/index',[EmployeeController::class,'index'])->name('employees.index');
+    Route::get('/create',[EmployeeController::class,'create'])->name('employees.create');
+    Route::post('/store', [EmployeeController::class,'store'])->name('employees.store');
+    Route::get('/show/{id}', [EmployeeController::class,'show'])->name('employees.show');
+    Route::get('/edit/{id}', [EmployeeController::class,'edit'])->name('employees.edit');
+    Route::post('/update/{id}', [EmployeeController::class,'update'])->name('employees.update');
+    Route::post('/destroy/{id}',[EmployeeController::class,'destory'])->name('employees.destroy');*/
+
+});
 

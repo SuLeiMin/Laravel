@@ -2,15 +2,15 @@
 
 @section('content')
 <div class="container">
-<form class="text-left" id="form" action="{{route("employees.store")}}" method="POST">
+<form class="text-left" id="form" action="{{route('employees.store')}}" method="post" enctype="multipart/form-data">
   @csrf
-  <input type="hidden" name="company_id" id="company_id" value="999999" />
+  <input type="hidden" name="id" id="id" value="999999" />
   
   <div class="form-signin">
     <div class="form-group row">
       <div class="col-sm-3">
         <button
-          type="button"
+          type="submit"
           id="save_btn"
           class="btn btn-lg btn-primary btn-block"
         >
@@ -108,7 +108,7 @@
           <p id="error"></p> 
         </div>
       </div>
-      @error('telephone')
+      @error('zip_code')
         <div class="text-danger"><small>{{$message}}</small></div>
       @enderror
     </div>
@@ -185,7 +185,7 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="department2" class="col-sm-2 col-form-label form-label text-left"
+    <label for="dept2" class="col-sm-2 col-form-label form-label text-left"
       >部署2</label
     >
     <div class="col-sm-4">
@@ -203,7 +203,7 @@
     <label for="in_charge_id" class="col-sm-2 col-form-label form-label text-left"
       >担当者氏名<span class="required">※</span></label
     >
-    <div class="col-sm-2">
+    <div class="col-sm-3">
       <select
         name="in_charge_id"
         id="in_charge_id"
@@ -238,7 +238,7 @@
     <label for="payment_method" class="col-sm-2 col-form-label form-label text-left"
       >決済方法</label
     >
-    <div class="col-sm-2">
+    <div class="col-sm-3">
       <select
         name="payment_method"
         id="payment_method"
@@ -256,35 +256,40 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="deadline1" class="col-sm-2 col-form-label form-label text-left"
+    <label for="billingdate" class="col-sm-2 col-form-label form-label text-left"
       >請求締日<span class="required">※</span></label
     >
-    <div class="col-sm-2">
+    <div class="col-sm-3">
       <select
-        name="deadline1"
-        id="deadline1"
+        name="billingdate"
+        id="billingdate"
         class="form-control"
         title="請求締日"
       >
         <option value="">請求締日</option>
         <option value="1">末日</option>
       </select>
-  
+      @error('billingdate')
+          <div class="text-danger"><small>{{$message}}</small></div>
+      @enderror
     </div>
   </div>
   <div class="form-group row">
-    <label for="deadline2" class="col-sm-2 col-form-label form-label text-left"
+    <label for="paymentdate" class="col-sm-2 col-form-label form-label text-left"
       >支払期日<span class="required">※</span></label>
-    <div class="col-sm-2">
+    <div class="col-sm-3">
       <select
-        name="deadline2"
-        id="deadline2"
+        name="paymentdate"
+        id="paymentdate"
         class="form-control"
         title="支払期日"
       >
         <option value="">支払期日</option>
         <option value="1">末日</option>
       </select>
+      @error('paymentdate')
+          <div class="text-danger"><small>{{$message}}</small></div>
+      @enderror
     </div>
   </div>
   <div class="form-group row">
@@ -373,19 +378,25 @@
       $(function () {
         // 保存
         $("#save_btn").on("click", function () {
-          if ($("#email_send:checked").val()) {
-            if (!confirm("登録内容をメール通知しますか？")) {
-              return false;
+            if ($("#email_send:checked").val()) {
+                if (!confirm("登録内容をメール通知しますか？")) {
+                  alert("保存されました。");
+                  return false; 
+                }
             }
-        }
-          if (!confirm("登録内容を保存しますか？")) {
-            // キャンセル
-            return false;
-          }
-          $("#form").submit();
-         // alert("保存されました。");
-        });
+            if (!confirm("登録内容を保存しますか？")) {
+                // キャンセル
+                return false;
+            }
+            if($("#name").val() || $("#zip_code").val() || $("#address1").val() || $("#address2").val() || 
+               $("#telephone").val() || $("#dept1").val() || $("#dept2").val() || $('#in_charge_id:selected').text()||
+               $('#payment_method:selected').text() || $('#billingdate:selected').text()|| $('#paymentdate:selected').text()||
+               $("#remark").val()||$("#remark2").val()||$("#remark3").val() != ''){
 
+                  alert("保存されました。");
+            }
+            $("#form").submit();    
+        });
         // キャンセル
         $("#cancel_btn").on("click", function () {
         location.href = "{{route("employees.index")}}";

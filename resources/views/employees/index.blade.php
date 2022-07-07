@@ -3,7 +3,7 @@
 @section('content')
 	<div class="container">
 	  <!-- Search -->
-	  <form id="search_form" class="my-2 my-md-0" action="{{ url('/search') }}" type="get">
+	  <form id="search_form" class="my-2 my-md-0">
 		<div class="form-group">
 		  <div class="col-sm-12 p-0">
 			<div class="input-group">
@@ -17,13 +17,12 @@
 				  type="text"
 				  id="search"
 				  name = "search"
-				  //value=""
+				  value=""
 				  class="form-control"
 				  placeholder="999999"
 				  aria-label="kigyoID"
 				  aria-describedby="basic-addon1"
 				/>
-
 				<span
 				  class="input-group-text"
 				  id="basic-addon2"
@@ -34,14 +33,13 @@
 				  type="text"
 				  id="search"
 				  name = "search"
-				  //value=""
+				  value=""
 				  class="form-control"
 				  placeholder="NEXT株式会社"
 				  aria-label="KigyoName"
 				  aria-describedby="basic-addon2"
 				/>
-
-				<span
+        <span
 				  class="input-group-text"
 				  id="basic-addon1"
 				  style="border: none; background-color: white"
@@ -74,7 +72,6 @@
 				  aria-label="kigyoID"
 				  aria-describedby="basic-addon1"
 				/>
-
 				<span
 				  class="input-group-text"
 				  id="basic-addon3"
@@ -89,7 +86,7 @@
 				  class="form-control"
 				  placeholder="03-XXXX-XXXX"
 				/>
-
+	  
 				<button
 				  type="submit"
 				  class="btn btn-outline-secondary"
@@ -118,15 +115,15 @@
 			<a href="{{route("employees.create")}}" class="btn btn-primary" id="entry_btn">
 				登録
 			</a>
-			<button type="button"  class="btn btn-primary" id="edit_btn">
+			<button type="button" class="btn btn-primary" id="edit_btn">
 				編集
 			</button>
-			<button type="button"  class="btn btn-primary" id="delete_btn">
+			<button type="button" class="btn btn-primary" id="delete_btn">
 				削除
 			</button>
-			<button type="button" class="btn btn-danger" id="previous_btn">
-				戻る
-			</button>
+      <button type="button" class="btn btn-danger" id="previous_btn">
+        戻る
+      </button>
 			   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -173,10 +170,10 @@
 				<th scope="col">部署1</th>
 				<th scope="col">部署2</th>
 				<th scope="col">契約番号</th>
-                <th scope="col">所定労働時間</th>
-                <th scope="col">休憩時間</th>
-                <th scope="col">勤務曜日</th>
-                <th scope="col">契約期間</th>
+        <th scope="col">所定労働時間</th>
+        <th scope="col">休憩時間</th>
+        <th scope="col">勤務曜日</th>
+        <th scope="col">契約期間</th>
 			  </tr>
 			</thead>
 			<tbody>
@@ -215,10 +212,9 @@
 		</div>
 	  </form>
 	</div>
-	{!! $items->links() !!}
-
-@push("js")
-	<script>
+  {!! $items->links() !!} 
+	@push("js")
+		<script>
 		$(function () {
 			let selno;
 			// 登録
@@ -236,7 +232,7 @@
 			// 削除処理
 			$("#delete_btn").on("click", function () {
 			if ((selno = chk_selno())) {
-				if (!confirm("削除しますか？")) {
+				if (!confirm("本当に削除しますか？")) {
 				// キャンセル
 				return false;
 				} else {
@@ -259,7 +255,7 @@
 						success: function(res){
 							alert(selno + "が削除されました");
 							location.reload();
-							location.href = "./top.html";
+              location.href = "./top.html";
 						}
 						})
 					}else{
@@ -275,10 +271,6 @@
 			$("#reset_btn").on("click", function () {
 			$("#search_form")[0].reset();
 			});
-			// 戻る
-			$("#previous_btn").on("click", function () {
-				location.href = "./top.html";
-			});
 		});
 		// レコード選択チェック
 		function chk_selno() {
@@ -289,7 +281,12 @@
 			}
 			return selno;
 		}
-		//電話番号ハイプン
+	
+    $("#previous_btn").on("click", function () {
+      location.href = "./top.html";
+    });
+
+    //電話番号ハイプン
       // 電話番号を整形する
       var getFormatPhone = function ($INPUT, $STRICT) {
         $STRICT = $STRICT || false;
@@ -767,7 +764,6 @@
           obj.value = h + "-" + m;
         }
       }
-
       /**************************
        * 郵便番号編集を解除するFunction
        **************************/
@@ -779,6 +775,7 @@
           obj.select(); //全選択
         }
       }
-	</script>
-@endpush
+	
+		</script>
+	@endpush
 @endsection

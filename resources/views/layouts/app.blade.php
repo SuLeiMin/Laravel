@@ -6,6 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Bootstrap core CSS -->
     <link href="{{asset("css/bootstrap.min.css")}}" rel="stylesheet" />
     <!-- Custom styles -->
@@ -95,6 +96,8 @@
 
       <!-- Custom js -->
       <script type="text/javascript" src="{{asset("js/common.js")}}"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/libphonenumber-js/1.1.10/libphonenumber-js.min.js"></script>
+      
       @stack("js")
     </body>
   </html>  

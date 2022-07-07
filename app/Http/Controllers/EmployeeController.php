@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\PostalCode;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
 {
@@ -22,8 +23,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-       $items = Employee::paginate(8);
-       return view('employees.index', compact('items'));
+        $items = Employee::paginate(5);
+        return view('employees.index', compact('items'));
     }
 
     // 検索ボタンの処理
@@ -36,7 +37,6 @@ class EmployeeController extends Controller
                 ->orwhere('telephone', 'like', '%'.$search.'%')
                 ->get();
         return view('employees.index', compact('items'));
-        
     }
 
     /**
@@ -56,7 +56,7 @@ class EmployeeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(StoreEmployeeRequest $request)
-    {
+    {  
         $employee = Employee::create($request->validated());        
         if($request->filled("noti")){
             Mail::to(env("MAIL_ADMIN_EMAIL"))->send(new NewEmployeeCreated($employee));
