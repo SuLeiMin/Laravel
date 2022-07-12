@@ -1,5 +1,5 @@
 @extends('layouts.app', ["title" => "契約企業情報"])
-
+@section('title','契約企業情報')
 @section('content')
 <div class="container">
 <form class="text-left" id="form" action="{{route('employees.store')}}" method="post" enctype="multipart/form-data">
@@ -17,7 +17,7 @@
           保存
         </button>
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-3" id="delete">
         <button
           type="button"
           id="delete_btn"
@@ -35,9 +35,9 @@
           キャンセル
         </button>
       </div>
-      <div class="col-sm-4 text-center">
-        <span class="required">※</span>は必須項目
-      </div>
+    </div>
+    <div class="col-sm-4 text-center">
+      <span class="required">※</span>は必須項目
     </div>
   </div>
   <div class="form-group row">
@@ -91,6 +91,7 @@
             class="btn btn-outline-secondary form-control"
             style="color: #0d6efd"
             id="search"
+            onClick="AjaxZip3.zip2addr('zip_code','','address1','address1');"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -125,6 +126,7 @@
         class="form-control"
         title="住所1"
         placeholder=""
+        style="text-align:right;"
         required
       />
       @error('address1')
@@ -434,42 +436,9 @@
    
         //削除ボタンを消すこと
         if ( localStorage.getItem('entry_btn') !== null ) {
-            $('#delete_btn').hide();
+            $('#delete').hide();
         }
       });
     </script>
-    
-    <script>
-      let search = document.getElementById('search');
-      search.addEventListener('click', ()=>{
-          
-          let api = 'https://zipcloud.ibsnet.co.jp/api/search?zipcode=';
-          let error = document.getElementById('error');
-          let input = document.getElementById('zip_code');
-          let address1 = document.getElementById('address1');
-          let param = input.value.replace("-",""); 
-          let url = api + param;
-          
-          fetch(url, {
-              timeout: 10000, 
-          })
-          .then((response)=>{
-              error.textContent = ''; 
-              return response.json();  
-          })
-          .then((data)=>{
-              if(data.status === 400){
-                  error.textContent = data.message;
-              }else if(data.results === null){
-                  error.textContent = '郵便番号から住所が見つかりませんでした。';
-              } else {
-                  address1.value = data.results[0].address1;
-              }
-          })
-          .catch((ex)=>{ 
-              console.log(ex);
-          });
-      }, false);
-  </script>
 @endpush
 @endsection

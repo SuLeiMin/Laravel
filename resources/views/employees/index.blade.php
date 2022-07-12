@@ -1,5 +1,5 @@
 @extends('layouts.app', ["title" => "契約企業管理"])
-	
+@section('title','契約企業管理')
 @section('content')
 	<div class="container">
 	  <!-- Search -->
@@ -118,9 +118,15 @@
 			<button type="button" class="btn btn-primary" id="edit_btn">
 				編集
 			</button>
-			<button type="button" class="btn btn-primary" id="delete_btn">
+      @if(count($items) !== 0)
+      <button type="button" class="btn btn-primary" id="delete_btn">
 				削除
-			</button>
+			</button>  
+      @else
+      <button type="button" class="btn btn-primary" id="delete_btn" hidden>
+				削除
+			</button>  
+      @endif
       <button type="button" class="btn btn-danger" id="previous_btn">
         戻る
       </button>
@@ -285,6 +291,14 @@
     $("#previous_btn").on("click", function () {
       location.href = "./top.html";
     });
+
+    $("#entry_btn").click(function(){
+       localStorage.setItem('entry_btn',true);
+    });
+
+    $("#edit_btn").click(function(){
+      localStorage.setItem('edit_btn',true);
+   });
 
     //電話番号ハイプン
       // 電話番号を整形する

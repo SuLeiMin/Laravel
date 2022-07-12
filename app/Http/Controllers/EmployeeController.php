@@ -21,21 +21,20 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $items = Employee::paginate(5);
-        return view('employees.index', compact('items'));
-    }
-
-    // 検索ボタンの処理
-    public function search(){
-        $search = $_GET['search'];
-        $items = Employee::where('id','LIKE','%'.$search.'%')
-                ->orwhere('name', 'like', '%'.$search.'%')
-                ->orwhere('zip_code', 'like', '%'.$search.'%')
-                ->orwhere('address1', 'like', '%'.$search.'%')
-                ->orwhere('telephone', 'like', '%'.$search.'%')
-                ->get();
+        $search = $request->input('search');
+        $items = Employee::where(function($q) use($request){
+            if($request->filled("search")){
+                $q->where('id', 'LIKE', "%{$request->get('search')}%")   
+                  ->orWhere('name', 'LIKE', "%{$request->get('search')}%")
+                  ->orWhere('zip_code', 'LIKE', "%{$request->get('search')}%")
+                  ->orWhere('address1', 'LIKE', "%{$request->get('search')}%")
+                  ->orWhere('telephone', 'LIKE', "%{$request->get('search')}%")
+                  ->get();
+            }
+        })->paginate(5);
+    
         return view('employees.index', compact('items'));
     }
 

@@ -34,6 +34,7 @@
         text-decoration: none;
       }
     </style>
+    <title>@yield('title')</title>
   </head>
   <body>
     <!-- Navigation -->
@@ -97,7 +98,7 @@
       <!-- Custom js -->
       <script type="text/javascript" src="{{asset("js/common.js")}}"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/libphonenumber-js/1.1.10/libphonenumber-js.min.js"></script>
-      
+      <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
       @stack("js")
     </body>
   </html>  
