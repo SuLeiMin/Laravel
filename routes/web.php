@@ -1,9 +1,8 @@
 <?php
 
 use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\DownloadsController;
-use App\Models\Employee;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\MtcompanyController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -26,9 +25,17 @@ Route::get('/', function () {
 
 Route::middleware("auth")->group(function(){
 
-    Route::get('download',[EmployeeController::class,"exportCSV"]);
-    Route::resource('employees', EmployeeController::class);
-    Route::get('employees/{company}/can-delete', [EmployeeController::class, 'canDelete'])->name('employees.can-delete');
-   
+    //Route::get('download',[EmployeeController::class,"exportCSV"]);
+    //Route::resource('employees', EmployeeController::class);
+    //Route::get('employees/{company}/can-delete', [EmployeeController::class, 'canDelete'])->name('employees.can-delete');
+    Route::resource('mtcompany', MtcompanyController::class);
+    Route::get('mtcompany/{mtcompany}/can-delete', [MtcompanyController::class, 'canDelete'])->name('mtcompany.can-delete');
+    Route::get('downloadCompany',[MtcompanyController::class,"export_company_CSV"]);
+    
+
 });
+
+Route::get('employees/{company}/can-delete', [EmployeeController::class, 'canDelete'])->name('employees.can-delete');
+Route::resource('employees',EmployeeController::class);
+Route::get('download',[EmployeeController::class,"exportCSV"]);
 

@@ -5,12 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Payment extends Model
+class Dtseikyusime extends Model
 {
     use HasFactory;
-    protected $table = 'payment';
+
+    protected $table = "dtseikyusime";
 
     protected $fillable = [
-        "payment_method",
+        "company_id",
+        "shimebi",
     ];
 }
+

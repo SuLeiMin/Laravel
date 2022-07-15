@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePaymentTable extends Migration
+class CreateDtseikyusimeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreatePaymentTable extends Migration
      */
     public function up()
     {
-        Schema::create('payment', function (Blueprint $table) {
+        Schema::create('dtseikyusime', function (Blueprint $table) {
             $table->id();
-            $table->enum("payment_method", ["credit", "debit", "invoice"]);
+            $table->integer('company_id');
+            $table->string('shimebi');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreatePaymentTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payment');
+        Schema::dropIfExists('dtseikyusime');
     }
 }

@@ -8,25 +8,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Employee extends Model
 {
-    use HasFactory, SoftDeletes;
-    
-    protected $table = 'employees';
+    use HasFactory,SoftDeletes;
+
+    protected $table = 'userlist';
    
     protected $fillable = [
-        "name",
-        "zip_code",
-        "address1",
-        "address2",
-        "telephone",
-        "dept1",
-        "dept2",
-        "in_charge_id",
-        "payment_method",
-        "billingdate",
-        "paymentdate",
-        "remark",
-        "remark2",
-        "remark3",
+        "user_id",
+        "company_id",
+        "username",
+        "department1",
+        "department2",
+        "password",
         "noti",
     ];
 }

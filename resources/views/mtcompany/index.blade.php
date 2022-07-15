@@ -1,221 +1,236 @@
-@extends('layouts.employee', ["title" => "従業員管理"])
-@section('title','従業員管理')
+@extends('layouts.mtcompany', ["title" => "契約企業管理"])
+@section('title','契約企業管理')
 @section('content')
-<div class="container">
-    <form id="search_form" class="my-2 my-md-0">
-      <div class="input-group">
+	<div class="container">
+	  <!-- Search -->
+	  <form id="search_form" class="my-2 my-md-0">
+		<div class="form-group">
+		  <div class="col-sm-12 p-0">
+			<div class="input-group">
+				<span
+				  class="input-group-text"
+				  id="basic-addon1"
+				  style="border: none; background-color: white"
+				  >契約企業ID</span
+				>
+				<input
+				  type="text"
+				  id="search"
+				  name = "search"
+				  value=""
+				  class="form-control"
+				  placeholder="999999"
+				  aria-label="kigyoID"
+				  aria-describedby="basic-addon1"
+				/>
+				<span
+				  class="input-group-text"
+				  id="basic-addon2"
+				  style="border: none; background-color: white"
+				  >企業名
+				</span>
+				<input
+				  type="text"
+				  id="search"
+				  name = "search"
+				  value=""
+				  class="form-control"
+				  placeholder="NEXT株式会社"
+				  aria-label="KigyoName"
+				  aria-describedby="basic-addon2"
+				/>
         <span
-          class="input-group-text"
-          id="basic-addon2"
-          style="border: none; background-color: white"
-          >従業員ID
-        </span>
-        <input
-          type="text"
-          name="search"
-          id="search"
-          class="form-control col-4"
-          placeholder="XXXX@nextkk.co.jp"
-          aria-label="Email"
-          aria-describedby="basic-addon2"
-        />
-        <span
-          class="input-group-text"
-          id="basic-addon3"
-          style="border: none; background-color: white"
-          >契約番号
-        </span>
-        <input
-          type="text"
-          name="search"
-          id="search"
-          class="form-control col-1"
-          placeholder="999999	"
-          aria-label="KeiyakuNO"
-          aria-describedby="basic-addon3"
-        />
-        <span
-          class="input-group-text"
-          id="basic-addon3"
-          style="border: none; background-color: white"
-          >労働者氏名</span
-        >
-        <input
-          type="text"
-          name="search"
-          id="search"
-          class="form-control col-2"
-          placeholder="山田　太郎"
-          aria-label="name"
-          aria-describedby="basic-addon3"
-        />
-        <span
-          class="input-group-text"
-          id="basic-addon3"
-          style="border: none; background-color: white"
-          >部署1</span
-        >
-        <input
-          type="text"
-          name="search"
-          id="search"
-          class="form-control col-1"
-          placeholder="管理本部	"
-          aria-label="Sosock1"
-          aria-describedby="basic-addon3"
-        />
-        <span
-          class="input-group-text"
-          id="basic-addon3"
-          style="border: none; background-color: white"
-          >部署2</span
-        >
-        <input
-          type="text"
-          name="search"
-          id="search"
-          class="form-control col-1"
-          placeholder="総務部"
-          aria-label="Sosock2"
-          aria-describedby="basic-addon3"
-        />
-        <button
-          type="button"
-          class="btn btn-outline-secondary"
-          style="color: #0d6efd"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="13"
-            height="13"
-            fill="currentColor"
-            class="bi bi-search"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
-            ></path>
-          </svg>
-        </button>
-      </div>
-    </div>
+				  class="input-group-text"
+				  id="basic-addon1"
+				  style="border: none; background-color: white"
+				  >郵便番号</span
+				>
+				<input
+				  type="text"
+				  id="search"
+				  name = "search"
+				  value=""
+				  class="form-control"
+				  placeholder="999999"
+				  aria-label="kigyoID"
+				  aria-describedby="basic-addon1"
+				/>
 
-    <div class="container">
-      <div class="form-inline">
-        <div class="form-group col-3">
-          <a href="{{route("employees.create")}}" class="btn btn-primary mr-1" id="entry_btn">
-            登録
-          </a>
-          <button type="button" class="btn btn-primary mr-1" id="edit_btn">
-            編集
-          </button>
-          @if (count($items) != 0)
-          <button type="button" class="btn btn-primary mr-1" id="delete_btn">
-            削除
-          </button>  
-          @else
-          <button type="button" class="btn btn-primary mr-1" id="delete_btn" hidden>
-            削除
-          </button>  
-          @endif
-          <button type="button" class="btn btn-danger" id="back_btn">
-            戻る
-          </button>
-        </div>
-        <div class="form-group col-5"></div>
-        <div class="form-group btn-float-right">
-          <a href="print"  class="btn btn-outline-primary" id="print_btn">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-file-ruled"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v4h10V2a1 1 0 0 0-1-1H4zm9 6H6v2h7V7zm0 3H6v2h7v-2zm0 3H6v2h6a1 1 0 0 0 1-1v-1zm-8 2v-2H3v1a1 1 0 0 0 1 1h1zm-2-3h2v-2H3v2zm0-3h2V7H3v2z"
-              />
-            </svg>
-            勤務表出力
-          </a>
-          <a href="download" class="btn btn-outline-primary"> 
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-download"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"
-              ></path>
-              <path
-                d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"
-              ></path>
-            </svg>
-            データ出力
-            </a>
-        </div>
-      </div>
+				<span
+				  class="input-group-text"
+				  id="basic-addon1"
+				  style="border: none; background-color: white"
+				  >住所</span
+				>
+				<input
+				  type="text"
+				  id="search"
+				  name = "search"
+				  value=""
+				  class="form-control"
+				  placeholder="999999"
+				  aria-label="kigyoID"
+				  aria-describedby="basic-addon1"
+				/>
+				<span
+				  class="input-group-text"
+				  id="basic-addon3"
+				  style="border: none; background-color: white"
+				  >TEL</span
+				>
+				<input
+				  type="text"
+				  id="search"
+				  name = "search"
+				  value=""
+				  class="form-control"
+				  placeholder="03-XXXX-XXXX"
+				/>
+	  
+				<button
+				  type="submit"
+				  class="btn btn-outline-secondary"
+				  style="color: #0d6efd"
+				>
+				  <svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="13"
+					height="13"
+					fill="currentColor"
+					class="bi bi-search"
+					viewBox="0 0 16 16"
+				  >
+					<path
+					  d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+					></path>
+				  </svg>
+				</button>
+		  </div>
+		</div>
 
-    </div>
-    <div class="container">
-      <div class="table-responsive">
-        <table class="table table-bordered table-hover">
-          <thead style="background-color: #bef5d6">
-            <tr>
-              <th></th>
-              <th scope="col">従業員ID</th>
-              <th scope="col">契約番号</th>
-              <th scope="col">従業員氏名</th>
-              <th scope="col">部署1</th>
-              <th scope="col">部署2</th>
-            </tr>
-          </thead>
-          <tbody>
-            @forelse ($items as $item)
-            <tr>
-              <td scope="row" class="text-center">
-                <input
-                  type="radio"
-                  name="sel_item"
-                  id="sel_item_{{$item->id}}"
-                  class="sel_item"
-                  value="{{$item->id}}"
-                />
-              </td>
-              <td><a href="employee.html">{{ $item->user_id }}</a></td>
-              <td>
-                <a href="../company/koyoukeiyaku.html">{{ $item->company_id }} </a>
-              </td>
-              <td><a href="employee.html">{{ $item->username }}</a></td>
-              <td>{{ $item->department1 }}</td>
-              <td>{{ $item->department2 }}</td>
-            </tr>
-            @empty
-            <tr>
-              <td colspan="14" align="center">0 件</td>
-            </tr>
-            @endforelse
-          </tbody>
-        </table>
-      </div>
-    </form>
-    </div>
-  @push("js")
+		<div class="container">
+		<form class="form-inline">
+			<div class="form-group">
+			<span>契約企業：</span>
+			<a href="{{route("mtcompany.create")}}" class="btn btn-primary" id="entry_btn">
+				登録
+			</a>
+			<button type="button" class="btn btn-primary" id="edit_btn">
+				編集
+			</button>
+      @if(count($items) !== 0)
+      <button type="button" class="btn btn-primary" id="delete_btn">
+				削除
+			</button>  
+      @else
+      <button type="button" class="btn btn-primary" id="delete_btn" hidden>
+				削除
+			</button>  
+      @endif
+      <button type="button" class="btn btn-danger" id="previous_btn">
+        戻る
+      </button>
+			   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			   &nbsp;&nbsp;
+			<a href="downloadCompany" class="btn btn-outline-primary"> 
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					fill="currentColor"
+					class="bi bi-download"
+					viewBox="0 0 16 16"
+				>
+				<path
+						d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"
+				></path>
+				<path
+						d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"
+				></path>
+				</svg>
+				データ出力
+			</a>
+			</div>	
+		</form>
+		</div>
+
+		<div class="table-responsive">
+		  <table class="table table-bordered table-hover list-table">
+			<thead style="background-color: #bef5d6">
+			  <tr>
+				<th></th>
+				<th scope="col">企業ID</th>
+				<th scope="col">契約企業名</th>
+				<th scope="col">郵便番号</th>
+				<th scope="col">住所1</th>
+				<th scope="col">住所2</th>
+				<th scope="col">TEL</th>
+				<th scope="col">部署1</th>
+				<th scope="col">部署2</th>
+				<th scope="col">契約番号</th>
+        <th scope="col">所定労働時間</th>
+        <th scope="col">休憩時間</th>
+        <th scope="col">勤務曜日</th>
+        <th scope="col">契約期間</th>
+			  </tr>
+			</thead>
+			<tbody>
+				@forelse($items as $item)
+				<tr>
+					<td scope="row" class="text-center">
+					  <input
+						type="radio"
+						name="sel_item"
+						id="sel_item_{{$item->id}}"
+						class="sel_item"
+						value="{{$item->id}}"
+					  />
+					</td>
+					<td><a href="{{ route('mtcompany.update',$item->id) }}">{{$item->id}}</a></td>
+					<td>{{$item->name}}</td>
+					<td>{{$item->zip_code}}</td>
+					<td>{{$item->address1}}</td>
+					<td>{{$item->address2}}</td>
+					<td>{{$item->telephone}}</td>
+					<td>{{$item->dept1}}</td>
+					<td>{{$item->dept2}}</td>
+					<td>～</td>
+					<td>～</td>
+					<td>～</td>
+					<td>～</td>
+					<td>～</td>
+				  </tr>
+				@empty
+				<tr>
+					<td colspan="14" align="center">0 件</td>
+				</tr>
+				@endforelse
+			</tbody>
+		  </table>
+		</div>
+	  </form>
+	</div>
+  {!! $items->links() !!} 
+	@push("js")
 		<script>
 		$(function () {
 			let selno;
 			// 登録
 			$("#entry_btn").on("click", function () {
-			location.href = "{{route("employees.create")}}";
+			location.href = "{{route("mtcompany.create")}}";
 			});
 			// 編集
 			$("#edit_btn").on("click", function () {
 			if ((selno = chk_selno())) {
-				let url = "{{route("employees.edit", "||")}}";
+				let url = "{{route("mtcompany.edit", "||")}}";
 				url = url.replace("||", chk_selno());
 				location.href = url;
 			}
@@ -227,13 +242,13 @@
 				// キャンセル
 				return false;
 				} else {
-				let url = "{{route("employees.can-delete", "||")}}";
+				let url = "{{route("mtcompany.can-delete", "||")}}";
 				url = url.replace("||", chk_selno());
 				$.ajax({
 					url,
 					success: function(res){
 					if(res){
-						let url = "{{route("employees.destroy", "||")}}";
+						let url = "{{route("mtcompany.destroy", "||")}}";
 						url = url.replace("||", chk_selno());
 						$.ajax({
 						url,
@@ -272,15 +287,19 @@
 			}
 			return selno;
 		}
-
-    $("#back_btn").on("click", function () {
+	
+    $("#previous_btn").on("click", function () {
       location.href = "./top.html";
     });
 
-    $("#print_btn").on("click",function(){
-
+    $("#entry_btn").click(function(){
+       localStorage.setItem('entry_btn',true);
     });
-    
+
+    $("#edit_btn").click(function(){
+      localStorage.setItem('edit_btn',true);
+   });
+
     //電話番号ハイプン
       // 電話番号を整形する
       var getFormatPhone = function ($INPUT, $STRICT) {
@@ -759,7 +778,6 @@
           obj.value = h + "-" + m;
         }
       }
-
       /**************************
        * 郵便番号編集を解除するFunction
        **************************/
@@ -771,22 +789,7 @@
           obj.select(); //全選択
         }
       }
-      $("#previous_btn").on("click", function () {
-        location.href = "./top.html";
-      });
-      // 削除処理
-      $("#delete_btn").on("click", function () {
-        if ((selno = chk_selno())) {
-          if (!confirm("本当に削除しますか？")) {
-            // キャンセル
-            return false;
-          } else {
-            // 実行
-            alert("削除されました。");
-            location.href = "./top.html";
-          }
-        }
-      });
-    </script>
-@endpush
+	
+		</script>
+	@endpush
 @endsection

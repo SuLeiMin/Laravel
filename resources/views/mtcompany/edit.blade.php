@@ -1,20 +1,10 @@
-@extends('layouts.app', ["title" => "契約企業情報登録・修正"])
-
+@extends('layouts.mtcompany', ["title" => "契約企業情報"])
+@section('title','契約企業情報編集')
 @section('content')
 <div class="container">
-<form class="text-left" id="form" action="{{ route('employees.update',$employee->id) }}" method="POST">
+<form class="text-left" id="form" action="{{ route('mtcompany.update',$mtcompany->id) }}" method="POST">
   @csrf
   @method('PUT')
-  @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-  @endif
-
   <div class="form-signin">
     <div class="form-group row">
       <div class="col-sm-3 offset-sm-2">
@@ -26,7 +16,7 @@
           保存
         </button>
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-3" id="delete">
         <button
           type="button"
           id="delete_btn"
@@ -36,7 +26,7 @@
         </button>
       </div>
       <div class="col-sm-4">
-        <a class="btn btn-lg btn-primary btn-block" href="{{ route('employees.index') }}" id="cancel_btn"> キャンセル</a>
+        <a class="btn btn-lg btn-primary btn-block" href="{{ route('mtcompany.index') }}" id="cancel_btn"> キャンセル</a>
     </div>
       <div class="col-sm-4 text-center">
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -49,7 +39,7 @@
       <p>契約企業ID</p>
     </div>
     <div class="col-sm-4 form-text-offset">
-      {{ $employee->id }}
+      {{ $mtcompany->id }}
     </div>
   </div>
   <div class="form-group row">
@@ -61,7 +51,7 @@
         type="text"
         name="name"
         id="name"
-        value="{{ $employee->name }}"
+        value="{{ $mtcompany->name }}"
         class="form-control"
         title="企業名"
         placeholder=""
@@ -82,7 +72,7 @@
           type="text"
           name="zip_code"
           id="zip_code"
-          value="{{ $employee->zip_code }}"
+          value="{{ $mtcompany->zip_code }}"
           class="form-control"
           title="郵便番号"
           placeholder="000-0000"
@@ -97,6 +87,7 @@
             class="btn btn-outline-secondary form-control"
             style="color: #0d6efd"
             id="search"
+            onClick="AjaxZip3.zip2addr('zip_code','','address1','address1');"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -125,10 +116,11 @@
         type="text"
         name="address1"
         id="address1"
-        value="{{ $employee->address1 }}"
+        value="{{ $mtcompany->address1 }}"
         class="form-control"
         title="住所1"
         placeholder=""
+        style="text-align:right;"
         required
       />
       @error('address1')
@@ -145,7 +137,7 @@
         type="text"
         name="address2"
         id="address2"
-        value="{{ $employee->address2 }}"
+        value="{{ $mtcompany->address2 }}"
         class="form-control"
         title="住所2"
         placeholder=""
@@ -161,7 +153,7 @@
         type="text"
         name="telephone"
         id="telephone"
-        value="{{ $employee->telephone }}"
+        value="{{ $mtcompany->telephone }}"
         class="form-control form-number"
         title="TEL"
         placeholder="00-0000-0000"
@@ -180,7 +172,7 @@
         type="text"
         name="dept1"
         id="dept1"
-        value="{{ $employee->dept1 }}"
+        value="{{ $mtcompany->dept1 }}"
         class="form-control"
         title="部署1"
         placeholder=""
@@ -200,7 +192,7 @@
         type="text"
         name="dept2"
         id="dept2"
-        value="{{ $employee->dept2 }}"
+        value="{{ $mtcompany->dept2 }}"
         class="form-control"
         title="部署2"
         placeholder=""
@@ -255,9 +247,9 @@
       >
         <option value="">決済方法</option>
 
-          <option {{ $employee->payment_method == 'credit' ? 'selected':'' }} value={{ $employee->id }}>{{ $employee->payment_method }}</option>
-          <option {{ $employee->payment_method == 'debit' ? 'selected':'' }}  value={{ $employee->id }}>{{ $employee->payment_method }}</option>
-          <option {{ $employee->payment_method == 'invoice' ? 'selected':'' }}  value={{ $employee->id }}>{{ $employee->payment_method }}</option>
+          <option value="1">クレジットカード</option>
+          <option value="2" selected>請求書発行</option>
+          <option value="3">口座引き落とし</option>
       
       </select>
       @error('payment_method')
@@ -278,7 +270,7 @@
       >
         <option value="">請求締日</option>
         <option value="1">末日</option>
-        <option {{ ($employee->billingdate) == 'lastday' ? 'selected' : '' }}  value="1">{{ $employee->billingdate }}</option>
+        
       </select>
       @error('billingdate')
           <div class="text-danger"><small>{{$message}}</small></div>
@@ -298,9 +290,9 @@
       >
         <option value="">支払期日</option>
         <option value="1">末日</option>
-        <option {{ ($employee->paymentdate) == 'lastday' ? 'selected' : '' }}  value="1">{{ $employee->paymentdate }}</option>
+        
       </select>
-      @error('deadline2')
+      @error('paymentdate')
           <div class="text-danger"><small>{{$message}}</small></div>
       @enderror
     </div>
@@ -319,7 +311,7 @@
         cols="50"
         rows="2"
         title="請求書備考"
-      >{{ $employee->remark }}</textarea>
+      >{{ $mtcompany->remark }}</textarea>
     </div>
   </div>
   <div class="form-group row">
@@ -336,7 +328,7 @@
         cols="50"
         rows="2"
         title="請求書備考"
-      >{{ $employee->remark2 }}</textarea>
+      >{{ $mtcompany->remark2 }}</textarea>
     </div>
   </div>
   <div class="form-group row">
@@ -353,7 +345,7 @@
         cols="50"
         rows="2"
         title="請求書備考"
-      >{{ $employee->remark3 }}</textarea>
+      >{{ $mtcompany->remark3 }}</textarea>
     </div>
   </div>
   <div class="form-group row">
@@ -361,13 +353,23 @@
       <p>登録日</p>
     </div>
     <div class="col-sm-2 form-text-offset">
-      <p>2021/11/22</p>
+      <p>
+        <?php 
+          $d = now()->format('Y/m/d'); 
+          echo $d;
+        ?>
+      </p>
     </div>
     <div class="col-sm-2 form-label">
       <p>変更日</p>
     </div>
     <div class="col-sm-3 form-text-offset">
-      <p>2022/04/21</p>
+      <p>
+        <?php 
+          $d = now()->format('Y/m/d'); 
+          echo $d;
+        ?>
+      </p>
     </div>
   </div>
   <div class="form-group row">
@@ -392,20 +394,33 @@
 @push("js")
     <script>
     $(function () {
-        // 保存
-        $("#save_btn").on("click", function () {
-          if(confirm("Are you sure to save?")){
-            location.href = "{{route("employees.index")}}";
-          }
-        });
-    });
+      $("#save_btn").on("click", function () {
+        if ($("#email_send:checked").val()) {
+            if (!confirm("登録内容をメール通知しますか？")) {
+              alert("保存されました。");
+              return false; 
+            }
+        }
+        if (!confirm("登録内容を保存しますか？")) {
+            // キャンセル
+            return false;
+        }
+        if($("#name").val() || $("#zip_code").val() || $("#address1").val() || $("#address2").val() || 
+           $("#telephone").val() || $("#dept1").val() || $("#dept2").val() || $('#in_charge_id:selected').text()||
+           $('#payment_method:selected').text() || $('#billingdate:selected').text()|| $('#paymentdate:selected').text()||
+           $("#remark").val()||$("#remark2").val()||$("#remark3").val() != ''){
+
+              alert("保存されました。");
+        }
+        $("#form").submit();    
+      });
+  });
 
     $(function(){
-      // get the item 
-      if ( localStorage.getItem('edit_btn') !== null ) {
-        $('#delete_btn').hide();
+      if ( localStorage.getItem('entry_btn') !== null ) {
+        $("#delete").css('display', 'none');
       }
-  });
+    });
     </script>
 @endpush
 @endsection
