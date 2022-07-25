@@ -1,0 +1,77 @@
+/* 共通 */
+
+/* ナビゲーション */
+.user-nav {
+    margin-right: 0;
+}
+
+/* フォーム */
+.form-signin {
+    width: 100%;
+    max-width: 500px;
+    padding: 15px;
+    margin: auto;
+}
+input[type=checkbox], input[type=radio] {
+    transform: scale(1.5);
+}
+.form-control,.btn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.form-control {
+    border: 1px solid #ced4da;
+}
+.input-group-radius input {
+    border-radius: 0.25rem !important;
+}
+.form-label {
+    text-align: left;
+    font-weight: bold;
+}
+.form-text-offset {
+    padding-top: 10px;
+}
+.form-number {
+    width: 200px;
+}
+label span {
+    padding: 0 0.25em;
+}
+.setting-btn {
+    margin-top: 0;
+}
+.setting-text {
+    margin: 0 0 0 0;
+}
+
+/* 一覧テーブル */
+.list-table {
+    min-width: 1140px;
+    font-size: 90%;
+}
+.list-table th {
+    white-space: nowrap;
+}
+.sel-cell {
+    width: 26px;
+}
+.required {
+    color: #F00;
+    font-size: 90%;
+}
+
+/*　画面サイズ576px以上に適用　*/
+@media screen and (min-width:576px) { 
+    .user-nav {
+        margin-right: 1em;
+    }
+    .form-label {
+        text-align: right;
+        font-size: 20px;
+        line-height: 2.2;
+    }
+    .setting-text {
+        margin: 20px 0 0 0;
+    }
+}
